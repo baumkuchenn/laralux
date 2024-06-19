@@ -18,5 +18,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call([
+            //Hotel dan produk komen dulu, seed yang 3 atas dulu baru hotel dan produk
+            // HotelTypeSeeder::class,
+            // ProductTypeSeeder::class,
+            // FasilitasSeeder::class,
+            HotelSeeder::class,
+            ProductSeeder::class
+        ]);
     }
 }
