@@ -16,4 +16,9 @@ class Product extends Model
     public function types(){
         return $this->belongsTo('App\Models\ProductType');
     }
+    public static function retrieveByHotelId($id)
+    {
+        $data = self::where('hotel_id', $id)->get();
+        return $data;
+    }
 }

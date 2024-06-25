@@ -14,7 +14,7 @@ return new class extends Migration
         //
         Schema::table('hotels', function (Blueprint $table) {
             $table->unsignedBigInteger('hoteltype_id');
-            $table->foreign('hoteltype_id')->references('id')->on('hoteltypes');
+            $table->foreign('hoteltype_id')->references('id')->on('hotel_types');
         });
     }
 

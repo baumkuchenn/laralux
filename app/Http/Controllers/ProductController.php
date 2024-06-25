@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -21,6 +22,8 @@ class ProductController extends Controller
     public function create()
     {
         //
+        $types = ProductType::all();
+        return view('product.formcreate', compact('types'));
     }
 
     /**

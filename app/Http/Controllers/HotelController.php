@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotel;
 use App\Models\HotelType;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -39,9 +40,12 @@ class HotelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Hotel $hotel)
+    public function show(string $id)
     {
         //
+        $hotel = Hotel::find($id);
+        $product = Product::retrieveByHotelId($id);
+        return view('hotel.detail', compact('hotel', 'product'));
     }
 
     /**

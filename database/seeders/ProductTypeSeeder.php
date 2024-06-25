@@ -14,7 +14,7 @@ class ProductTypeSeeder extends Seeder
     public function run(): void
     {
         //
-        DB::table('producttypes')->insert([
+        DB::table('product_types')->insert([
             [
                 "nama" => "Standar",
             ],

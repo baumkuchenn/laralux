@@ -14,7 +14,7 @@ class HotelTypeSeeder extends Seeder
     public function run(): void
     {
         //
-        DB::table('hoteltypes')->insert([
+        DB::table('hotel_types')->insert([
             [
                 "nama" => "City Hotel",
             ],
