@@ -35,6 +35,15 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new Hotel();
+        $data->nama = $request->get('hotel_name');
+        $data->alamat = $request->get('hotel_address');
+        $data->no_telpon = $request->get('hotel_phone');
+        $data->email = $request->get('hotel_email');
+        $data->bintang = $request->get('hotel_bintang');
+        $data->hoteltype_id = $request->get('hotel_type');
+        $data->save();
+        return redirect()->route('hotel.index')->with('status', 'Berhasil Menambah Data');
     }
 
     /**
@@ -51,17 +60,29 @@ class HotelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Hotel $hotel)
+    public function edit(string $id)
     {
         //
+        $types = HotelType::orderBy('nama')->get();
+        $data = Hotel::find($id);
+        return view('hotel.formedit', compact('data', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Hotel $hotel)
+    public function update(Request $request, string $id)
     {
         //
+        $data = Hotel::find($id);
+        $data->nama = $request->get('hotel_name');
+        $data->alamat = $request->get('hotel_address');
+        $data->no_telpon = $request->get('hotel_phone');
+        $data->email = $request->get('hotel_email');
+        $data->bintang = $request->get('hotel_bintang');
+        $data->hoteltype_id = $request->get('hotel_type');
+        $data->save();
+        return redirect()->route('hotel.index')->with('status', 'Berhasil Mengubah Data');
     }
 
     /**
