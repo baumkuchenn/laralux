@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 Template Name: Conquer - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.2.0
 Version: 2.0
 Author: KeenThemes
@@ -26,18 +26,24 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta content="" name="author" />
     <meta name="MobileOptimized" content="320">
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+        type="text/css" />
+
     <link href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-    <link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/fullcalendar/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets/plugins/fullcalendar/fullcalendar/fullcalendar.css') }}" rel="stylesheet"
+        type="text/css" />
     <link href="{{ asset('assets/plugins/jqvmap/jqvmap/jqvmap.css') }}" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGIN STYLES -->
     <!-- BEGIN THEME STYLES -->
+    {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">  --}}
     <link href="{{ asset('assets/css/style-conquer.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style-responsive.css') }}" rel="stylesheet" type="text/css" />
@@ -47,6 +53,79 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
+
+    <style>
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            margin: 0 0 10px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #555;
+            margin: 0 0 10px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: #007bff;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .stars {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -78,7 +157,8 @@ License: You must have a valid license purchased only from themeforest(the above
             <ul class="nav navbar-nav pull-right">
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
                 <li class="dropdown" id="header_notification_bar">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                        data-close-others="true">
                         <i class="icon-bell"></i>
                         <span class="badge badge-success">
                             6 </span>
@@ -182,7 +262,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- END NOTIFICATION DROPDOWN -->
                 <!-- BEGIN INBOX DROPDOWN -->
                 <li class="dropdown" id="header_inbox_bar">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                        data-close-others="true">
                         <i class="icon-envelope-open"></i>
                         <span class="badge badge-info">
                             5 </span>
@@ -222,7 +303,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 16 mins </span>
                                         </span>
                                         <span class="message">
-                                            Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+                                            Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh...
+                                        </span>
                                     </a>
                                 </li>
                                 <li>
@@ -267,7 +349,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 46 mins </span>
                                         </span>
                                         <span class="message">
-                                            Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+                                            Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh...
+                                        </span>
                                     </a>
                                 </li>
                             </ul>
@@ -280,7 +363,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- END INBOX DROPDOWN -->
                 <!-- BEGIN TODO DROPDOWN -->
                 <li class="dropdown" id="header_task_bar">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                        data-close-others="true">
                         <i class="icon-calendar"></i>
                         <span class="badge badge-warning">
                             5 </span>
@@ -302,7 +386,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 30% </span>
                                         </span>
                                         <span class="progress">
-                                            <span style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="width: 40%;" class="progress-bar progress-bar-success"
+                                                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
                                                 <span class="sr-only">
                                                     40% Complete </span>
                                             </span>
@@ -318,7 +403,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 65% </span>
                                         </span>
                                         <span class="progress progress-striped">
-                                            <span style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="width: 65%;" class="progress-bar progress-bar-danger"
+                                                aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
                                                 <span class="sr-only">
                                                     65% Complete </span>
                                             </span>
@@ -334,7 +420,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 98% </span>
                                         </span>
                                         <span class="progress">
-                                            <span style="width: 98%;" class="progress-bar progress-bar-success" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="width: 98%;" class="progress-bar progress-bar-success"
+                                                aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
                                                 <span class="sr-only">
                                                     98% Complete </span>
                                             </span>
@@ -350,7 +437,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 10% </span>
                                         </span>
                                         <span class="progress progress-striped">
-                                            <span style="width: 10%;" class="progress-bar progress-bar-warning" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="width: 10%;" class="progress-bar progress-bar-warning"
+                                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
                                                 <span class="sr-only">
                                                     10% Complete </span>
                                             </span>
@@ -366,7 +454,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 58% </span>
                                         </span>
                                         <span class="progress progress-striped">
-                                            <span style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="width: 58%;" class="progress-bar progress-bar-info"
+                                                aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
                                                 <span class="sr-only">
                                                     58% Complete </span>
                                             </span>
@@ -382,7 +471,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 85% </span>
                                         </span>
                                         <span class="progress progress-striped">
-                                            <span style="width: 85%;" class="progress-bar progress-bar-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="width: 85%;" class="progress-bar progress-bar-success"
+                                                aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
                                                 <span class="sr-only">
                                                     85% Complete </span>
                                             </span>
@@ -398,7 +488,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 18% </span>
                                         </span>
                                         <span class="progress progress-striped">
-                                            <span style="width: 18%;" class="progress-bar progress-bar-important" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="width: 18%;" class="progress-bar progress-bar-important"
+                                                aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
                                                 <span class="sr-only">
                                                     18% Complete </span>
                                             </span>
@@ -418,7 +509,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 </li>
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <li class="dropdown user">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                        data-close-others="true">
                         <img alt="" src="{{ asset('assets/img/avatar3_small.jpg') }}" />
                         <span class="username username-hide-on-mobile">{{ Auth::user()->name }} </span>
                         <i class="fa fa-angle-down"></i>
@@ -431,7 +523,8 @@ License: You must have a valid license purchased only from themeforest(the above
                             <a href="page_calendar.html"><i class="fa fa-calendar"></i> My Calendar</a>
                         </li>
                         <li>
-                            <a href="page_inbox.html"><i class="fa fa-envelope"></i> My Inbox <span class="badge badge-danger">
+                            <a href="page_inbox.html"><i class="fa fa-envelope"></i> My Inbox <span
+                                    class="badge badge-danger">
                                     3 </span>
                             </a>
                         </li>
@@ -443,7 +536,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <li class="divider">
                         </li>
                         <li>
-                            <form action="{{route('logout')}}" method="post">
+                            <form action="{{ route('logout') }}" method="post">
                                 @csrf
                                 <i class="fa fa-key"></i>
                                 <input type="submit" value="logout" class='btn btn-danger' />
@@ -485,7 +578,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </form>
                     </li>
                     <li class="start active ">
-                        <a href="{{ url('hotels') }}">
+                        <a href="{{ url('hotel') }}">
                             <i class="icon-home"></i>
                             <span class="title">Daftar Hotel</span>
                             <span class="selected"></span>
@@ -498,7 +591,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('type') }}">
+                        <a href="{{ url('hoteltype') }}">
                             <i class="icon-card-list"></i>
                             <span class="title">Daftar Tipe</span>
                         </a>
@@ -524,11 +617,13 @@ License: You must have a valid license purchased only from themeforest(the above
         <div class="page-content-wrapper">
             <div class="page-content">
                 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-                <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true"></button>
                                 <h4 class="modal-title">Modal title</h4>
                             </div>
                             <div class="modal-body">
@@ -554,7 +649,8 @@ License: You must have a valid license purchased only from themeforest(the above
                             <span>
                                 Theme Color </span>
                             <ul>
-                                <li class="color-black current color-default tooltips" data-style="default" data-original-title="Default">
+                                <li class="color-black current color-default tooltips" data-style="default"
+                                    data-original-title="Default">
                                 </li>
                                 <li class="color-grey tooltips" data-style="grey" data-original-title="Grey">
                                 </li>
@@ -625,8 +721,12 @@ License: You must have a valid license purchased only from themeforest(the above
                         </li>
                     </ul>
                     <div class="page-toolbar">
-                        <div id="dashboard-report-range" class="pull-right tooltips btn btn-fit-height btn-primary" data-container="body" data-placement="bottom" data-original-title="Change dashboard date range">
-                            <i class="icon-calendar"></i>&nbsp; <span class="thin uppercase visible-lg-inline-block"></span>&nbsp; <i class="fa fa-angle-down"></i>
+                        <div id="dashboard-report-range" class="pull-right tooltips btn btn-fit-height btn-primary"
+                            data-container="body" data-placement="bottom"
+                            data-original-title="Change dashboard date range">
+                            <i class="icon-calendar"></i>&nbsp; <span
+                                class="thin uppercase visible-lg-inline-block"></span>&nbsp; <i
+                                class="fa fa-angle-down"></i>
                         </div>
                     </div>
                 </div>
@@ -657,7 +757,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
     <script src="{{ asset('assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') }}"
+        type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/uniform/jquery.uniform.min.js') }}" type="text/javascript"></script>
@@ -669,18 +770,22 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="{{ asset('assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') }}" type="text/javascript">
+    </script>
     <script src="{{ asset('assets/plugins/jquery.peity.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jquery.pulsate.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jquery-knob/js/jquery.knob.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/flot/jquery.flot.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/flot/jquery.flot.resize.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript">
+    </script>
     <script src="{{ asset('assets/plugins/gritter/js/jquery.gritter.js') }}" type="text/javascript"></script>
     <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-    <script src="{{ asset('assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js') }}" type="text/javascript">
+    </script>
+    <script src="{{ asset('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js') }}" type="text/javascript">
+    </script>
     <script src="{{ asset('assets/plugins/jquery.sparkline.min.js') }}" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HotelType extends Model
 {
+    protected $table = 'hotel_types';
     use HasFactory;
     use SoftDeletes;
     public function hotel():HasMany

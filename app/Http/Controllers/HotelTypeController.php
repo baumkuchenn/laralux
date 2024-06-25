@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\HotelType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Nette\Utils\Strings;
 
 class HotelTypeController extends Controller
 {
@@ -13,6 +15,9 @@ class HotelTypeController extends Controller
     public function index()
     {
         //
+        $type = HotelType::all();
+        // dd($type);
+        return view('hoteltype.index', ['datas' => $type]);
     }
 
     /**
@@ -21,6 +26,7 @@ class HotelTypeController extends Controller
     public function create()
     {
         //
+        return view('hoteltype.formcreate');
     }
 
     /**
@@ -29,6 +35,11 @@ class HotelTypeController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new HotelType();
+        $data->nama = $request->get("type_name");
+        $data->save();
+
+        return redirect()->route('hoteltype.index')->with('status', 'Horray ! Your data is successfully recorded !');
     }
 
     /**
@@ -42,9 +53,12 @@ class HotelTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(HotelType $hotelType)
+    public function edit(string $id)
     {
         //
+        $data = HotelType::find($id);
+        // dd($data);
+        return view('hoteltype.formedit', compact('data'));
     }
 
     /**
@@ -53,13 +67,29 @@ class HotelTypeController extends Controller
     public function update(Request $request, HotelType $hotelType)
     {
         //
+        // $data = $hotelType;
+        // $data->nama = $request->get('type_name');
+        $hotelType->nama = $request->type_name;
+        $hotelType->save();
+        return redirect()->route('hoteltype.index')->with('status', 'Berhasil Mengubah Data');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HotelType $hotelType)
+    public function destroy(string $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('permission', $user);
+        try {
+            $data = HotelType::find($id);
+            $data->delete();
+            return redirect()->route('hoteltype.index')->with('status', 'Anda berhasil menghapus data');
+        } catch (\PDOException $ex) {
+            // Failed to delete data, then show exception message
+            $msg = "Terjadi kesalahan pada saat menghapus data";
+            return redirect()->route('hoteltype.index')->with('status', $msg);
+        }
     }
 }

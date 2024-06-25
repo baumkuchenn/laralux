@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\HotelType;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -23,6 +24,8 @@ class HotelController extends Controller
     public function create()
     {
         //
+        $types = HotelType::all();
+        return view('hotel.formcreate', compact('types'));
     }
 
     /**
