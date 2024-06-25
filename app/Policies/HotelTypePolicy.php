@@ -16,7 +16,8 @@ class HotelTypePolicy
 
     }
 
-    public function check(User $user){
+    public function check(User $user)
+    {
         return ($user->role == 'employee'
             ? Response::allow()
             : Response::deny('Hanya untuk pegawai'));

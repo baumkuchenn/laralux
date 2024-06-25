@@ -74,7 +74,12 @@
         <div class="gallery-container">
             @foreach ($hotels as $d)
                 <div class="card">
-                    <img src="{{ asset('images/logo/' . $d->id . '.jpg') }}" alt="Hotel Logo">
+                    @php
+                        $logoPath = 'images/logo/' . $d->id . '.jpg';
+                        $defaultLogoPath = 'images/logo/default.jpg';
+                        $logoUrl = asset(file_exists(public_path($logoPath)) ? $logoPath : $defaultLogoPath);
+                    @endphp
+                    <img src="{{ $logoUrl }}" alt="Hotel Logo">
                     <div class="card-body">
                         <h5 class="card-title">{{ $d->nama }}</h5>
                         <p class="card-text">{{ $d->alamat }}</p>
@@ -88,7 +93,7 @@
                         </div>
                         <div class="btn-group">
                             <a href="#" class="btn">View</a>
-                            <a href="#" class="btn">Edit</a>
+                            <a href="{{ route('hotel.edit', $d->id) }}" class="btn">Edit</a>
                         </div>
                     </div>
                 </div>
