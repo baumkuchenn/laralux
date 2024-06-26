@@ -19,8 +19,15 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <form method="POST" action="{{ route('hotel.store') }}">
+            <form method="POST" action="{{ route('hotel.store') }}" enctype="multipart/form-data">
                 @csrf
+
+                <div class="form-group">
+                    <label for="thumbnail">Thumbnail</label>
+                    <input type="file" class="form-control" id="thumbnail" name="thumbnail">
+                    <small id="thumbnailHelp" class="form-text text-muted">Upload thumbnail hotel disini.</small>
+                </div>
+
                 <div class="form-group">
                     <label for="exampleInputType">Nama Hotel</label>
                     <input type="text" class="form-control" id="exampleInputType" name="hotel_name"
