@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -19,11 +21,12 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
         //
         $types = ProductType::all();
-        return view('product.formcreate', compact('types'));
+        $hotel = Hotel::find($id);
+        return view('product.formcreate', compact('types', 'hotel'));
     }
 
     /**
@@ -32,6 +35,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new Product();
+        $data->nama = $request->get('product_name');
+        $data->hotel_id = $request->get('hotel_id');
+        $data->price = $request->get('product_price');
+        $data->producttype_id = $request->get('product_type');
+        $data->save();
+        return redirect()->route('hotel.show', $request->get('hotel_id'))->with('status', 'Berhasil Menambah Data');
     }
 
     /**
@@ -45,17 +55,28 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(string $idProduct)
     {
         //
+        $types = ProductType::all();
+        $product = Product::find($idProduct);
+        $hotel = Hotel::find($product->hotel_id);
+        return view('product.formedit', compact('types', 'hotel', 'product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $id)
     {
         //
+        $data = Product::find($id);
+        $data->nama = $request->get('product_name');
+        $data->hotel_id = $request->get('hotel_id');
+        $data->price = $request->get('product_price');
+        $data->producttype_id = $request->get('product_type');
+        $data->save();
+        return redirect()->route('hotel.show', $request->get('hotel_id'))->with('status', 'Berhasil Mengubah Data');
     }
 
     /**
@@ -64,5 +85,15 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        $user = Auth::user();
+        $this->authorize('permission', $user);
+        $hotel_id = $product->hotel_id;
+        try {
+            $product->delete();
+            $msg = 'Anda berhasil menghapus data';
+        } catch (\PDOException $e) {
+            $msg = 'Terjadi kesalahan pada saat menghapus data';
+        }
+        return redirect()->route('hotel.show', $hotel_id)->with('status', $msg);
     }
 }

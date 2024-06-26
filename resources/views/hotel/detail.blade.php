@@ -1,14 +1,22 @@
 @extends('layout.conquer2')
 @section('isi')
-<div>
-    <h2><b>{{$hotel->nama}}</b></h2>
-    <p><i class="fa fa-map-marker"></i> {{$hotel->alamat}}</p>
+<div style="display: flex; align-items: flex-start;">
+    <img height="200px" src="{{ asset('images/thumbnail_hotel/'.$hotel->id.'.jpg') }}" />
+    <div style="flex: 1; margin-left: 20px;">
+        <h2><b>Grand Paradise Resort</b></h2>
+        <div class="stars">
+            @for ($i = 0; $i < $hotel->bintang; $i++)
+                <i class="fa fa-star"></i>
+                @endfor
+        </div>
+        <h4><i class="fa fa-map-marker" style="font-size: 1em;"></i> {{$hotel->alamat}}</h4>
+        <h4><i class="fa fa-envelope" style="font-size: 1em;"></i> {{$hotel->email}}</h4>
+        <h4><i class="fa fa-phone" style="font-size: 1em;"></i> {{$hotel->no_telpon}}</h4>
+    </div>
 </div>
-<div>
 
-</div>
-<div>
-    <a href="{{ route('product.create') }}" class="btn btn-xs btn-success mb-3">+ Tambah Kamar</a>
+<div style="margin-top: 20px;">
+    <a href="{{ route('product.create', $hotel->id) }}" class="btn btn-xs btn-success mb-3" style="margin-bottom: 10px;">+ Tambah Kamar</a>
     <table class="table">
         <tr>
             <th>Tipe Kamar</th>
@@ -19,8 +27,8 @@
             <td>{{ $item->nama }}</td>
             <td>{{ $item->price }}</td>
             <td>
-                <a href="{{ url('product/'.$item->id.'/edit') }}" class="btn btn-warning">Ubah</a>
-                <form method="POST" action="{{ url('product/'.$item->id) }}">
+                <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>
+                <form method="POST" action="{{ route('product.destroy', $item->id) }}">
                     @csrf
                     @method('DELETE')
                     <input type="submit" value="Hapus" class="btn btn-danger" onclick="return confirm('Apakah yakin mau menghapus kamar {{ $item->nama }}?')">

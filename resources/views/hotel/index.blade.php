@@ -19,7 +19,7 @@
     <tr>
         <td>{{ $hotel->nama }}</td>
         <td>
-                <img height='100px' src="{{ asset('images/logo/'.$hotel->id.'.jpg')}}" /><br>
+                <img height='100px' src="{{ asset('images/thumbnail_hotel/'.$hotel->id.'.jpg')}}" /><br>
                 <a href="{{ url('hotel/uploadLogo/'.$hotel->id) }}">
                     <button class='btn btn-xs btn-default'>upload</button>
                 </a>
