@@ -1,7 +1,7 @@
 @extends('layout.conquer2')
 @section('isi')
 
-<!-- <table class="table">
+ {{-- <table class="table">
     <thead>
         <tr>
             <th>Nama</th>
@@ -67,14 +67,14 @@
         @endif 
 @endforeach
 </tbody>
-</table> -->
+</table>  --}}
 
 <main>
     <a href="{{ route('hotel.create') }}" class="btn btn-xs btn-success mb-3">+ New Hotel</a>
     <div class="gallery-container">
         @foreach ($hotels as $d)
         <div class="card">
-            <img src="{{ asset('images/logo/' . $d->id . '.jpg') }}" alt="Hotel Logo">
+            <img src="{{ asset('images/thumbnail_hotel/' . $d->id . '.jpg') }}" alt="Hotel Logo">
             <div class="card-body">
                 <h5 class="card-title">{{ $d->nama }}</h5>
                 <p class="card-text">{{ $d->alamat }}</p>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="btn-group">
                     <a href="{{ route('hotel.show', $d->id) }}" class="btn">View</a>
-                    <a href="#" class="btn">Edit</a>
+                    <a href="{{route('hotel.edit', $d->id)}}" class="btn">Edit</a>
                 </div>
             </div>
         </div>
