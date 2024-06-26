@@ -43,6 +43,11 @@ class HotelController extends Controller
         $data->bintang = $request->get('hotel_bintang');
         $data->hoteltype_id = $request->get('hotel_type');
         $data->save();
+
+        $file = $request->file('thumbnail');
+        $filename = $data->id . '.' . 'jpg';
+        $path = $file->move(public_path('images/thumbnail_hotel'), $filename);
+
         return redirect()->route('hotel.index')->with('status', 'Berhasil Menambah Data');
     }
 
