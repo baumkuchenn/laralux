@@ -3,11 +3,11 @@
 <div style="display: flex; align-items: flex-start;">
     <img height="200px" src="{{ asset('images/thumbnail_hotel/'.$hotel->id.'.jpg') }}" />
     <div style="flex: 1; margin-left: 20px;">
-        <h2><b>Grand Paradise Resort</b></h2>
+        <h2><b>{{ $hotel->nama }}</b></h2>
         <div class="stars">
             @for ($i = 0; $i < $hotel->bintang; $i++)
                 <i class="fa fa-star"></i>
-                @endfor
+            @endfor
         </div>
         <h4><i class="fa fa-map-marker" style="font-size: 1em;"></i> {{$hotel->alamat}}</h4>
         <h4><i class="fa fa-envelope" style="font-size: 1em;"></i> {{$hotel->email}}</h4>
@@ -16,7 +16,7 @@
 </div>
 
 <div style="margin-top: 20px;">
-    @if (auth()->user()->role == 'owner' || auth()->user()->role == 'staff')
+    @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
     <a href="{{ route('product.create', $hotel->id) }}" class="btn btn-xs btn-success mb-3" style="margin-bottom: 10px;">+ Tambah Kamar</a>
     @endif
     <table class="table">
@@ -33,13 +33,13 @@
             <td>
                 <ul>
                     @foreach ($item->fasilitas as $fasilitas)
-                        <li>{{ $fasilitas->nama }}</li>
+                    <li>{{ $fasilitas->nama }}</li>
                     @endforeach
                 </ul>
             </td>
             <td>{{ $item->price }}</td>
             <td>
-                @if (auth()->user()->role == 'owner' || auth()->user()->role == 'staff')
+                @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
                 <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>
                 <form method="POST" action="{{ route('product.destroy', $item->id) }}">
                     @csrf

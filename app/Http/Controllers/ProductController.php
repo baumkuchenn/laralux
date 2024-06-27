@@ -25,6 +25,9 @@ class ProductController extends Controller
     public function create(string $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $types = ProductType::all();
         $hotel = Hotel::find($id);
         return view('product.formcreate', compact('types', 'hotel'));
@@ -36,6 +39,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $data = new Product();
         $data->nama = $request->get('product_name');
         $data->hotel_id = $request->get('hotel_id');
@@ -64,6 +70,9 @@ class ProductController extends Controller
     public function edit(string $idProduct)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $types = ProductType::all();
         $product = Product::find($idProduct);
         $hotel = Hotel::find($product->hotel_id);
@@ -76,6 +85,9 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $data = Product::find($id);
         $data->nama = $request->get('product_name');
         $data->hotel_id = $request->get('hotel_id');

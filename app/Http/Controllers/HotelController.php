@@ -15,7 +15,7 @@ class HotelController extends Controller
      */
     public function index()
     {
-        //
+        //   
         $hotels = Hotel::all();
         return view('hotel.index', compact('hotels'));
     }
@@ -26,6 +26,9 @@ class HotelController extends Controller
     public function create()
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $types = HotelType::all();
         return view('hotel.formcreate', compact('types'));
     }
@@ -36,6 +39,9 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $data = new Hotel();
         $data->nama = $request->get('hotel_name');
         $data->alamat = $request->get('hotel_address');
@@ -69,6 +75,9 @@ class HotelController extends Controller
     public function edit(string $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $types = HotelType::orderBy('nama')->get();
         $data = Hotel::find($id);
         return view('hotel.formedit', compact('data', 'types'));
@@ -80,6 +89,9 @@ class HotelController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+
         $data = Hotel::find($id);
         $data->nama = $request->get('hotel_name');
         $data->alamat = $request->get('hotel_address');
