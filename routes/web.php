@@ -29,8 +29,8 @@ Route::get('/', [HotelController::class, 'index'])->middleware('auth');
 
 // Rute untuk Owner & Staff
 Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
-    Route::resource('hotel', HotelController::class)->except(['show']);
-    Route::resource('product', ProductController::class)->except(['show']);
+    Route::resource('hotel', HotelController::class);
+    Route::resource('product', ProductController::class);
     Route::resource('hoteltype', HotelTypeController::class);
     Route::resource('product', ProductController::class);
     Route::get('/product/create/{id}', [ProductController::class, 'create'])->name('product.create');
