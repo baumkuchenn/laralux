@@ -97,13 +97,15 @@ class HotelController extends Controller
     public function destroy(string $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
         try {
             $data = Hotel::find($id);
             $data->delete();
-            return redirect()->route('hotel.index')->with('status', 'Horray ! Your data is successfully deleted !');
+            return redirect()->route('hotel.index')->with('status', 'Anda berhasil menghapus data');
         } catch (\PDOException $ex) {
             // Failed to delete data, then show exception message
-            $msg = "Failed to delete data ! Make sure there is no related data before deleting it";
+            $msg = "Terjadi kesalahan pada saat menghapus data, pastikan tidak ada relasi pada data tersebut";
             return redirect()->route('hotel.index')->with('status', $msg);
         }
     }

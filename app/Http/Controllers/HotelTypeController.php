@@ -81,7 +81,7 @@ class HotelTypeController extends Controller
     {
         //
         $user = Auth::user();
-        $this->authorize('permission', $user);
+        $this->authorize('employee-permission', $user);
         try {
             $data = HotelType::find($id);
             $data->delete();

@@ -18,8 +18,8 @@ class HotelTypePolicy
 
     public function check(User $user)
     {
-        return ($user->role == 'staff' || $user->role == 'owner')
+        return ($user->role != 'customer')
         ? Response::allow()
-        : Response::deny('Hanya untuk pegawai dengan peran staff atau owner');
+        : Response::deny('Hanya untuk pegawai');
     }
 }

@@ -25,8 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-        Gate::define('permission', 'App\Policies\HotelTypePolicy@check');
-
+        Gate::define('employee-permission', 'App\Policies\HotelTypePolicy@check');
         //
     }
 }

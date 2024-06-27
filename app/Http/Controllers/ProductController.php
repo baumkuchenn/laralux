@@ -101,7 +101,7 @@ class ProductController extends Controller
     {
         //
         $user = Auth::user();
-        $this->authorize('permission', $user);
+        $this->authorize('employee-permission', $user);
         $hotel_id = $product->hotel_id;
         try {
             $product->delete();
