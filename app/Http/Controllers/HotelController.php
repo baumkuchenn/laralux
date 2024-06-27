@@ -6,6 +6,7 @@ use App\Models\Hotel;
 use App\Models\HotelType;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HotelController extends Controller
 {
@@ -58,7 +59,7 @@ class HotelController extends Controller
     {
         //
         $hotel = Hotel::find($id);
-        $product = Product::retrieveByHotelId($id);
+        $product = Product::with('fasilitas')->where('hotel_id', $id)->get();
         return view('hotel.detail', compact('hotel', 'product'));
     }
 
@@ -93,8 +94,17 @@ class HotelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Hotel $hotel)
+    public function destroy(string $id)
     {
         //
+        try {
+            $data = Hotel::find($id);
+            $data->delete();
+            return redirect()->route('hotel.index')->with('status', 'Horray ! Your data is successfully deleted !');
+        } catch (\PDOException $ex) {
+            // Failed to delete data, then show exception message
+            $msg = "Failed to delete data ! Make sure there is no related data before deleting it";
+            return redirect()->route('hotel.index')->with('status', $msg);
+        }
     }
 }

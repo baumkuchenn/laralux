@@ -16,25 +16,37 @@
 </div>
 
 <div style="margin-top: 20px;">
+    @if (auth()->user()->role == 'owner' || auth()->user()->role == 'staff')
     <a href="{{ route('product.create', $hotel->id) }}" class="btn btn-xs btn-success mb-3" style="margin-bottom: 10px;">+ Tambah Kamar</a>
+    @endif
     <table class="table">
         @foreach ($product as $item)
         <tr>
             <th>{{ $item->nama }} </th>
+            <th>Fasilitas</th>
             <th>Harga/kamar/malam</th>
         </tr>
         <tr>
             <td>
                 <img height="200px" src="{{ asset('images/products/' . $item->id . '.jpg') }}" alt="Hotel Logo">
             </td>
+            <td>
+                <ul>
+                    @foreach ($item->fasilitas as $fasilitas)
+                        <li>{{ $fasilitas->nama }}</li>
+                    @endforeach
+                </ul>
+            </td>
             <td>{{ $item->price }}</td>
             <td>
+                @if (auth()->user()->role == 'owner' || auth()->user()->role == 'staff')
                 <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>
                 <form method="POST" action="{{ route('product.destroy', $item->id) }}">
                     @csrf
                     @method('DELETE')
                     <input type="submit" value="Hapus" class="btn btn-danger" onclick="return confirm('Apakah yakin mau menghapus kamar {{ $item->nama }}?')">
                 </form>
+                @endif
             </td>
         </tr>
         @endforeach

@@ -22,11 +22,24 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HotelController::class, 'index'])->middleware('auth');
-Route::resource('hoteltype', HotelTypeController::class)->middleware('auth');
-Route::resource('hotel', HotelController::class)->middleware('auth');
 
-Route::resource('product', ProductController::class)->middleware('auth');
-Route::get('/product/create/{id}', [ProductController::class, 'create'])->middleware('auth')->name('product.create');
+
+// Route::resource('product', ProductController::class)->middleware('auth');
+// Route::get('/product/create/{id}', [ProductController::class, 'create'])->middleware('auth')->name('product.create');
+
+// Rute untuk Owner & Staff
+Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
+    Route::resource('hotel', HotelController::class)->except(['show']);
+    Route::resource('product', ProductController::class)->except(['show']);
+    Route::resource('hoteltype', HotelTypeController::class);
+    Route::resource('product', ProductController::class);
+    Route::get('/product/create/{id}', [ProductController::class, 'create'])->name('product.create');
+});
+
+// Rute untuk customer
+Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
+    Route::get('hotel/{id}', [HotelController::class, 'show'])->name('hotel.show');
+});
 
 Auth::routes();
 

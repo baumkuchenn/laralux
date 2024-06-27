@@ -21,4 +21,8 @@ class Product extends Model
         $data = self::where('hotel_id', $id)->get();
         return $data;
     }
+    public function fasilitas()
+    {
+        return $this->belongsToMany(Fasilitas::class, 'fasilitas_product', 'product_id', 'fasilitas_id');
+    }
 }
