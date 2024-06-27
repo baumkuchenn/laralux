@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HotelController::class, 'index'])->middleware('auth');
 
+Route::resource('product', ProductController::class);
+
 
 // Route::resource('product', ProductController::class)->middleware('auth');
 // Route::get('/product/create/{id}', [ProductController::class, 'create'])->middleware('auth')->name('product.create');
@@ -32,13 +34,13 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
     Route::resource('hotel', HotelController::class);
     Route::resource('product', ProductController::class);
     Route::resource('hoteltype', HotelTypeController::class);
-    Route::resource('product', ProductController::class);
+    // Route::resource('product', ProductController::class);
     Route::get('/product/create/{id}', [ProductController::class, 'create'])->name('product.create');
 });
 
 // Rute untuk customer
 Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
-    Route::get('hotel/{id}', [HotelController::class, 'show'])->name('hotel.show');
+    Route::resource('hotel', HotelController::class);
 });
 
 Auth::routes();
