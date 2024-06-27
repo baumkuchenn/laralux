@@ -24,8 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HotelController::class, 'index'])->middleware('auth');
 Route::resource('hoteltype', HotelTypeController::class)->middleware('auth');
 Route::resource('hotel', HotelController::class)->middleware('auth');
+
 Route::resource('product', ProductController::class)->middleware('auth');
 Route::get('/product/create/{id}', [ProductController::class, 'create'])->middleware('auth')->name('product.create');
+
 Auth::routes();
 
 Route::get('/home', [HotelController::class, 'index'])->name('home');

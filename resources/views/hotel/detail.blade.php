@@ -18,13 +18,15 @@
 <div style="margin-top: 20px;">
     <a href="{{ route('product.create', $hotel->id) }}" class="btn btn-xs btn-success mb-3" style="margin-bottom: 10px;">+ Tambah Kamar</a>
     <table class="table">
-        <tr>
-            <th>Tipe Kamar</th>
-            <th>Harga</th>
-        </tr>
         @foreach ($product as $item)
         <tr>
-            <td>{{ $item->nama }}</td>
+            <th>{{ $item->nama }} </th>
+            <th>Harga/kamar/malam</th>
+        </tr>
+        <tr>
+            <td>
+                <img height="200px" src="{{ asset('images/products/' . $item->id . '.jpg') }}" alt="Hotel Logo">
+            </td>
             <td>{{ $item->price }}</td>
             <td>
                 <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>

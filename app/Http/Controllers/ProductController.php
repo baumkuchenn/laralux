@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -41,6 +42,11 @@ class ProductController extends Controller
         $data->price = $request->get('product_price');
         $data->producttype_id = $request->get('product_type');
         $data->save();
+
+        $file = $request->file('gambar_kamar');
+        $filename = $data->id . '.' . 'jpg';
+        $file->move('images/products', $filename);
+
         return redirect()->route('hotel.show', $request->get('hotel_id'))->with('status', 'Berhasil Menambah Data');
     }
 
@@ -76,6 +82,15 @@ class ProductController extends Controller
         $data->price = $request->get('product_price');
         $data->producttype_id = $request->get('product_type');
         $data->save();
+
+        // File::delete(public_path() . "/" . $request->filepath);
+        $file = $request->file('gambar_kamar');
+        if ($file != null) {
+            $filename = $id . '.' . 'jpg';
+            File::delete(public_path() . "/images/products" . $filename);
+            $file->move('images/products', $filename);
+        }
+
         return redirect()->route('hotel.show', $request->get('hotel_id'))->with('status', 'Berhasil Mengubah Data');
     }
 

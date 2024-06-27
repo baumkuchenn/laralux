@@ -1,74 +1,6 @@
 @extends('layout.conquer2')
 @section('isi')
 
- {{-- <table class="table">
-    <thead>
-        <tr>
-            <th>Nama</th>
-            <th>Logo</th>
-<th>Alamat</th>
-<th>Nomor Telepon</th>
-<th>Email</th>
-<th>Bintang</th>
-<th>Tipe</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-    @foreach ($hotels as $hotel)
-    <tr>
-        <td>{{ $hotel->nama }}</td>
-        <td>
-                <img height='100px' src="{{ asset('images/thumbnail_hotel/'.$hotel->id.'.jpg')}}" /><br>
-                <a href="{{ url('hotel/uploadLogo/'.$hotel->id) }}">
-                    <button class='btn btn-xs btn-default'>upload</button>
-                </a>
-                <form style="display: inline" method="POST" action="{{url('hotel/delPhoto')}}">
-                    @csrf
-                    <input type="hidden" value="{{'images/logo/'.$hotel->id.'.jpg'}}" name='filepath' />
-                    <input type="submit" value="delete" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure ? ');">
-                </form>
-
-            </td>
-<td>{{ $hotel->alamat }}</td>
-<td>{{ $hotel->no_telpon }}</td>
-<td>{{ $hotel->email }}</td>
-<td>{{ $hotel->bintang }}</td>
-<td>{{ $hotel->type->nama }}</td>
-<td>
-    <a class="btn btn-info" href="#detail_{{$hotel->id}}" data-toggle="modal">Detail</a>
-
-    <a class="btn btn-success tombol-produk" href="#modalproduct" data-toggle="modal" data-id="{{$hotel->id}}">Product</a>
-
-    <div class="modal fade" id="detail_{{$hotel->id}}" tabindex="-1" role="basic" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">{{$hotel->nama}}</h4>
-                </div>
-                <div class="modal-body">
-                    <img src="{{ asset('images/hotels/'.$hotel->image.'.jpg') }}" height="200px" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
- @if ($hotel->products)
-        @foreach ($hotel->products as $product)
-        <tr>
-            <td colspan="3">{{ $product->room_type }}</td>
-            <td>{{ $product->base_price_per_night }}</td>
-        </tr>
-        @endforeach
-        @endif 
-@endforeach
-</tbody>
-</table>  --}}
-
 <main>
     <a href="{{ route('hotel.create') }}" class="btn btn-xs btn-success mb-3">+ New Hotel</a>
     <div class="gallery-container">
@@ -81,7 +13,7 @@
                 <div class="stars">
                     @for ($i = 0; $i < $d->bintang; $i++)
                         <i class="fa fa-star"></i>
-                    @endfor
+                        @endfor
                 </div>
                 <div>
                     <p>{{ $d->type->nama }}</p>

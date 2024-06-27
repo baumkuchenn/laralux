@@ -44,6 +44,12 @@
                 <small id="nameHelp" class="form-text text-muted">Masukkan harga kamar disini.</small>
             </div>
 
+            <div class="form-group">
+                <label for="gambar_kamar">Gambar Kamar</label>
+                <input type="file" class="form-control" id="gambar_kamar" name="gambar_kamar">
+                <small id="thumbnailHelp" class="form-text text-muted">Upload gambar kamar disini.</small>
+            </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
