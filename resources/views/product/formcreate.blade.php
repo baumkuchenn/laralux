@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form method="POST" action="{{ route('product.store') }}">
+        <form method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label for="gambar_kamar">Gambar Kamar</label>
                 <input type="file" class="form-control" id="gambar_kamar" name="gambar_kamar">
-                <small id="thumbnailHelp" class="form-text text-muted">Upload gambar kamar disini.</small>
+                <small id="thumbnailHelp" class="form-text text-muted">Upload thumbnail hotel disini.</small>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>

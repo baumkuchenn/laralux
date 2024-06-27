@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form method="POST" action="{{ route('product.update', $product->id) }}">
+        <form method="POST" action="{{ route('product.update', $product->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
