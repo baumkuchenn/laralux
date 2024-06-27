@@ -17,8 +17,8 @@ class CheckRole
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if (!Auth::check()) {
-            // Jika pengguna belum login, arahkan ke halaman index customer
-            return redirect()->route('customer.index');
+            // Jika pengguna belum login, arahkan ke halaman login
+            return redirect()->route('/login');
         }
 
         $user = Auth::user();
