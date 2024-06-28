@@ -10,10 +10,12 @@ class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    public function hotels(){
+    public function hotels()
+    {
         return $this->belongsTo('App\Models\Hotel');
     }
-    public function types(){
+    public function types()
+    {
         return $this->belongsTo('App\Models\ProductType');
     }
     public static function retrieveByHotelId($id)
@@ -24,5 +26,10 @@ class Product extends Model
     public function fasilitas()
     {
         return $this->belongsToMany(Fasilitas::class, 'fasilitas_product', 'product_id', 'fasilitas_id');
+    }
+    public function transaction()
+    {
+        return $this->belongsToMany(Transaction::class, 'products_transactions', 'products_id', 'transactions_id')
+            ->withPivot('quantity', 'sub_total');
     }
 }

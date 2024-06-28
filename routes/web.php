@@ -4,8 +4,9 @@ use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelTypeController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\FrontEndController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -54,7 +55,7 @@ Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
         Route::get('laralux/cart/delete/{id}', [FrontEndController::class, 'deleteFromCart'])->name('delFromCart');
         Route::post('laralux/cart/addQty', [FrontEndController::class, 'addQuantity'])->name('addQty');
         Route::post('laralux/cart/reduceQty', [FrontEndController::class, 'reduceQuantity'])->name('redQty');
-        Route::get('laralux/cart/checkout',[FrontEndController::class,'checkout'])->name('checkout');
+        Route::get('laralux/cart/checkout',[TransactionController::class,'checkout'])->name('checkout');
         
 });
 

@@ -42,4 +42,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function transaction()
+    {
+        return $this->belongsToMany(Transaction::class, 'membership', 'users_id', 'transactions_id')
+            ->withPivot('points');
+    }
 }
