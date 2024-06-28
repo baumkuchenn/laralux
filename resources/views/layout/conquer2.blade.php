@@ -152,11 +152,14 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- BEGIN TOP NAVIGATION MENU -->
             <ul class="nav navbar-nav pull-right">
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
+                @if (auth()->check() && (auth()->user()->role == 'customer'))
                 <li class="dropdown user">
                     <a href="{{ route('cart') }}" class="dropdown-toggle">
                         <i class="fa fa-shopping-cart"></i>
+                        <span class="badge">{{ session()->get('cartItemCount', 0) }}</span>
                     </a>
                 </li>
+                @endif
                 <!-- END TODO DROPDOWN -->
                 <li class="devider">
                     &nbsp;
@@ -238,38 +241,38 @@ License: You must have a valid license purchased only from themeforest(the above
                     </li>
                     <li class="start active ">
                         <a href="{{ url('hotel') }}">
-                            <i class="icon-home"></i>
+                            <i class="fa fa-home"></i>
                             <span class="title">Daftar Hotel</span>
                             <span class="selected"></span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('hoteltype') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-building"></i>
                             <span class="title">Daftar Tipe Hotel</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('producttype') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-suitcase"></i>
                             <span class="title">Daftar Tipe Kamar</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('fasilitas') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-tasks"></i>
                             <span class="title">Daftar Fasilitas</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('transaction') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-money"></i>
                             <span class="title">Daftar Transaksi</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('customer') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-users"></i>
                             <span class="title">Daftar Customer</span>
                         </a>
                     </li>
@@ -289,7 +292,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="page-bar">
                     <ul class="page-breadcrumb">
                         <!-- Buat navigasi nanti bisa ditambahkan pakai yield-->
-                         @yield('navigasi')
+                        @yield('navigasi')
                         <!-- <li>
                             <i class="fa fa-angle-right"></i>
                             <a href="#">Dashboard</a>

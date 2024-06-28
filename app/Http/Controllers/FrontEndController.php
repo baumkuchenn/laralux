@@ -11,7 +11,7 @@ class FrontEndController extends Controller
     public function addToCart($id)
     {
         $product = Product::find($id);
-        $cart = session()->get('cart');
+        $cart = session()->get('cart', []);
 
         if (!isset($cart[$id])) {
             $cart[$id] = [
@@ -23,8 +23,11 @@ class FrontEndController extends Controller
         } else {
             $cart[$id]['quantity']++;
         }
+
+        $cartItemCount = array_sum(array_column($cart, 'quantity'));
         session()->put('cart', $cart);
-        return redirect()->back()->with("status", "Produk Telah ditambahkan ke Cart");
+        session()->put('cartItemCount', count(session()->get('cart')));
+        return redirect()->back()->with("status", "Produk Telah ditambahkan ke Cart")->with('cartItemCount', $cartItemCount);;
     }
 
     public function cart()

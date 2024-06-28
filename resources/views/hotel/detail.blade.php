@@ -44,7 +44,7 @@
             <td>
                 <div class="action">
                     <a class="btn" href="{{route('addCart',$item->id)}}"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-                    <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
+                    <!-- <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a> -->
                 </div>
             </td>
             @endif
