@@ -49,16 +49,18 @@
             </td>
             @endif
 
+            @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
             <td>
-                @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
                 <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>
+            </td>
+            <td>
                 <form method="POST" action="{{ route('product.destroy', $item->id) }}">
                     @csrf
                     @method('DELETE')
                     <input type="submit" value="Hapus" class="btn btn-danger" onclick="return confirm('Apakah yakin mau menghapus kamar {{ $item->nama }}?')">
                 </form>
-                @endif
             </td>
+            @endif
         </tr>
         @endforeach
     </table>

@@ -3,7 +3,7 @@
 
 <main>
     @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
-    <a href="{{ route('hotel.create') }}" class="btn btn-xs btn-success mb-3">+ New Hotel</a>
+    <a href="{{ route('hotel.create') }}" class="btn btn-xs btn-success mb-3">+ Tambah Hotel</a>
     @endif
     <div class="gallery-container">
         @foreach ($hotels as $d)
@@ -21,16 +21,16 @@
                     <div>
                         <p>{{ $d->type->nama }}</p>
                     </div>
+                    @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
                     <div class="btn-group">
-                        @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
-                        <a href="{{ route('hotel.edit', $d->id) }}" class="btn">Edit</a>
+                        <a href="{{ route('hotel.edit', $d->id) }}" class="btn btn-success">Ubah</a>
                         <form method="POST" action="{{ route('hotel.destroy', $d->id) }}">
                             @csrf
                             @method('DELETE')
-                            <input type="submit" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure to delete {{ $d->id }} - {{ $d->nama }} ? ');">
+                            <input type="submit" value="Hapus" class="btn btn-danger" onclick="return confirm('Are you sure to delete {{ $d->id }} - {{ $d->nama }} ? ');">
                         </form>
-                        @endif
                     </div>
+                    @endif
                 </div>
             </div>
         </a>
