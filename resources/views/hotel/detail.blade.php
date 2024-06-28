@@ -39,16 +39,16 @@
                 </ul>
             </td>
             <td>{{ $item->price }}</td>
-            
+
             @if (auth()->check() && (auth()->user()->role == 'customer'))
             <td>
                 <div class="action">
                     <a class="btn" href="{{route('addCart',$item->id)}}"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
                     <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
-                </div>  
+                </div>
             </td>
             @endif
-            
+
             <td>
                 @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
                 <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>

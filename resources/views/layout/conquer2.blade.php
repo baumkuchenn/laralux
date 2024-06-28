@@ -256,6 +256,12 @@ License: You must have a valid license purchased only from themeforest(the above
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('fasilitas') }}">
+                            <i class="icon-card-list"></i>
+                            <span class="title">Daftar Fasilitas</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('transaction') }}">
                             <i class="icon-card-list"></i>
                             <span class="title">Daftar Transaksi</span>

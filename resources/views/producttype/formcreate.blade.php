@@ -23,7 +23,7 @@
             @csrf
             <div class="form-group">
                 <label for="exampleInputType">Nama Tipe Kamar</label>
-                <input type="text" class="form-control" id="exampleInputType" name="type_name" aria-describedby="nameHelp" placeholder="Masukkan Nama Tipe Hotel...">
+                <input type="text" class="form-control" id="exampleInputType" name="type_name" aria-describedby="nameHelp" placeholder="Masukkan Nama Tipe Kamar...">
                 <small id="nameHelp" class="form-text text-muted">Masukkan nama tipe kamar disini.</small>
             </div>
 

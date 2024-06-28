@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelTypeController;
 use App\Http\Controllers\ProductController;
@@ -37,9 +38,9 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
     // Route::resource('hotel', HotelController::class);
     // Route::resource('product', ProductController::class);
     Route::resource('hoteltype', HotelTypeController::class);
-    // Route::resource('producttype', ProductType::class);
     Route::get('/product/create/{id}', [ProductController::class, 'create'])->name('product.create');
     Route::resource('producttype', ProductTypeController::class);
+    Route::resource('fasilitas', FasilitasController::class);
 });
 
 // Rute untuk customer

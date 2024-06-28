@@ -55,16 +55,16 @@ class ProductTypeController extends Controller
     {
         //
         $data = ProductType::find($id);
-        // dd($data);
         return view('producttype.formedit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductType $productType)
+    public function update(Request $request, string $id)
     {
         //
+        $productType = ProductType::find($id);
         $productType->nama = $request->type_name;
         $productType->save();
         return redirect()->route('producttype.index')->with('status', 'Berhasil Mengubah Data');
