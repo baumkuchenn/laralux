@@ -1,7 +1,39 @@
 @extends('layout.conquer2')
 @section('isi')
+<style>
+    .thumbnail-image {
+        height: 100px;
+        width: auto;
+        padding: 5px;
+    }
+
+    .hotel-info img {
+        height: 100px;
+        width: auto;
+    }
+
+    .stars .fa-star {
+        color: #FFD700;
+        /* Warna emas untuk bintang */
+    }
+
+    .hotel-info h4 {
+        font-size: 1em;
+        margin: 5px 0;
+    }
+
+    .btn-success.mb-3 {
+        margin-bottom: 10px;
+    }
+
+    .table td img {
+        height: 100px;
+        width: auto;
+    }
+</style>
+
 <div style="display: flex; align-items: flex-start;">
-    <img height="200px" src="{{ asset('images/thumbnail_hotel/'.$hotel->id.'.jpg') }}" />
+    <img class="img-thumbnail" src="{{ asset('images/thumbnail_hotel/'.$hotel->id.'.jpg') }}" />
     <div style="flex: 1; margin-left: 20px;">
         <h2><b>{{ $hotel->nama }}</b></h2>
         <div class="stars">
@@ -15,55 +47,62 @@
     </div>
 </div>
 
-<div style="margin-top: 20px;">
+<div>
     @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
-    <a href="{{ route('product.create', $hotel->id) }}" class="btn btn-xs btn-success mb-3" style="margin-bottom: 10px;">+ Tambah Kamar</a>
+    <a href="{{ route('product.create', $hotel->id) }}" class="btn btn-success mb-3">+ Tambah Kamar</a>
     @endif
-    <table class="table">
-        @foreach ($product as $item)
-        <tr>
-            <th>{{ $item->nama }} </th>
-            <th>Fasilitas</th>
-            <th>Harga/kamar/malam</th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>
-                <img height="200px" src="{{ asset('images/products/' . $item->id . '.jpg') }}" alt="Hotel Logo">
-            </td>
-            <td>
-                <ul>
-                    @foreach ($item->fasilitas as $fasilitas)
-                    <li>{{ $fasilitas->nama }}</li>
-                    @endforeach
-                </ul>
-            </td>
-            <td>{{ 'IDR '. number_format($item->price, 0, ',', '.') }}</td>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nama Kamar</th>
+                <th>Fasilitas</th>
+                <th>Harga/kamar/malam</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($product as $item)
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img class="img-thumbnail thumbnail-image" src="{{ asset('images/products/' . $item->id . '.jpg') }}" alt="Hotel Logo">
+                        <p class="ml-2 font-weight-bold">{{ $item->nama }}</p>
+                    </div>
+                </td>
+                <td>
+                    <ul>
+                        @foreach ($item->fasilitas as $fasilitas)
+                        <li>{{ $fasilitas->nama }}</li>
+                        @endforeach
+                    </ul>
+                </td>
+                <td>{{ 'IDR '. number_format($item->price, 0, ',', '.') }}</td>
 
-            @if (!auth()->check() || (auth()->user()->role == 'customer'))
-            <td>
-                <div class="action">
-                    <a class="btn" href="{{route('addCart',$item->id)}}"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-                    <!-- <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a> -->
-                </div>
-            </td>
-            @endif
+                @if (!auth()->check() || (auth()->user()->role == 'customer'))
+                <td>
+                    <a class="btn btn-primary" href="{{route('addCart',$item->id)}}">
+                        <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </a>
+                </td>
+                @endif
 
-            @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
-            <td>
-                <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>
-                <form method="POST" action="{{ route('product.destroy', $item->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="Hapus" class="btn btn-danger" onclick="return confirm('Apakah yakin mau menghapus kamar {{ $item->nama }}?')">
-                </form>
-            </td>
-            @endif
-        </tr>
-        @endforeach
+                @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
+                <td>
+                    <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning mb-2">Ubah</a>
+                    <form method="POST" action="{{ route('product.destroy', $item->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" value="Hapus" class="btn btn-danger" onclick="return confirm('Apakah yakin mau menghapus kamar {{ $item->nama }}?')">
+                    </form>
+                </td>
+                @endif
+            </tr>
+            @endforeach
+        </tbody>
     </table>
 </div>
 @endsection
+
 @section('judul-halaman', $hotel->nama)
 @section('title-halaman', 'Laralux.com | Daftar Hotel')
 @section('navigasi')

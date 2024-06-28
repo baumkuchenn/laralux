@@ -182,7 +182,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     @if (Auth::check())
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="extra_profile.html"><i class="fa fa-user"></i> My Profile</a>
+                            <a href="#"><i class="fa fa-user"></i> My Profile</a>
                         </li>
 
                         <li class="divider">
