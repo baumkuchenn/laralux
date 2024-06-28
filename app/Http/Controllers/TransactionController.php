@@ -70,17 +70,32 @@ class TransactionController extends Controller
         $cart = session('cart');
         $user = Auth::user();
         $t = new Transaction();
-        
+
         $t->transaction_date = Carbon::now()->toDateTimeString();
-        $t->save();
+        // $t->save();
 
-        //insert into junction table product_transaction using eloquent
+        // Insert into junction table product_transaction using eloquent
         $t->insertProducts($cart, $user);
-
-        //insert into junction table membership using eloquent
         $t->membership($cart, $user);
 
+        // Calculate points based on cart contents
+        $points = $t->calculatePoints($cart);
+
+        // Redeem points if applicable
+        $grandTotal = array_sum(array_column($cart, 'sub_total')); // Total sebelum PPN
+        $grandTotal = $t->redeemPoints($points, $grandTotal);
+
+        // Hitung PPN
+        $ppn = $grandTotal * 0.11; // PPN 11%
+        $grandTotal += $ppn; // Total setelah ditambah PPN
+
+        // Simpan total dan poin member ke dalam transaksi
+        $t->total = $grandTotal;
+        $t->save();
+
+        // Clear cart
         session()->forget('cart');
+
         return redirect()->route('hotel.index')->with('status', 'Checkout berhasil');
     }
 }

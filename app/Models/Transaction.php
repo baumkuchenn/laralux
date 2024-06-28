@@ -28,12 +28,55 @@ class Transaction extends Model
             # code...
             $subtotal = $c['quantity'] * $c['price'];
             $total += $subtotal;
-            $this->products()->attach($c['id'], ['quantity' => $c['quantity'], 'sub_total' => $subtotal]);
+            $this->product()->attach($c['id'], ['quantity' => $c['quantity'], 'sub_total' => $subtotal]);
         }
     }
 
     public function membership($cart, $user)
     {
-        // $this->
+        $points = $this->calculatePoints($cart); // Calculate points based on cart items
+
+        // Create or update membership record for the user
+        $membership = Membership::where('user_id', $user->id)->first();
+
+        if (!$membership) {
+            $membership = new Membership();
+            $membership->user_id = $user->id;
+        }
+
+        $membership->total_points += $points;
+        $membership->save();
+    }
+
+    public function calculatePoints($cart)
+    {
+        $points = 0;
+
+        foreach ($cart as $c) {
+            $product = Product::find($c['id']);
+
+            if ($product->producttype_id == 2 || $product->producttype_id == 3) {
+                // Jika produk bertipe deluxe, superior, atau suite
+                $points += 5 * $c['quantity'];
+            } else {
+                // Jika produk tidak bertipe deluxe, superior, atau suite
+                $points += floor($c['sub_total'] / 300000); // Konversi pembelian menjadi poin
+            }
+        }
+
+        return $points;
+    }
+
+    public function redeemPoints($points, $total)
+    {
+        $redeemableAmount = $points * 100000;
+
+        if ($redeemableAmount <= $total) {
+            // Potong poin dari total transaksi
+            return $total - $redeemableAmount;
+        } else {
+            // Jika poin yang dapat diredeem lebih besar dari total transaksi
+            return 0; // atau throw exception sesuai kebijakan bisnis
+        }
     }
 }

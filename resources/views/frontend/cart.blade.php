@@ -160,6 +160,7 @@
                     </div>
 
                     <div class="cart-btn">
+
                         <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Continue Shopping</a>
                         <a href="{{ route('checkout') }}" class="btn btn-xs btn-success">Checkout</a>
                     </div>
@@ -203,6 +204,11 @@
             },
             success: function(data) {
                 location.reload();
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+                alert('Gagal menambah kuantitas barang: ' + xhr.responseText);
             }
         });
     }
