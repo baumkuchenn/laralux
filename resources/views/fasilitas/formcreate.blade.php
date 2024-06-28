@@ -42,3 +42,17 @@
 <!-- END SAMPLE FORM PORTLET-->
 @endsection
 @section('judul-halaman', 'Tambah Fasilitas Kamar')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <a href="{{ route('fasilitas.index') }}">Daftar Fasilitas</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Tambah Fasilitas</b>
+</li>
+@endsection

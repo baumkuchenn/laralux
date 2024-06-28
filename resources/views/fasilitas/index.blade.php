@@ -32,3 +32,13 @@
 </div>
 @endsection
 @section('judul-halaman', 'Daftar Fasilitas')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Daftar Fasilitas</b>
+</li>
+@endsection

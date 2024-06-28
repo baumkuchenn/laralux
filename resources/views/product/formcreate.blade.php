@@ -58,3 +58,17 @@
 <!-- END SAMPLE FORM PORTLET-->
 @endsection
 @section('judul-halaman', 'Tambah Kamar Hotel')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <a href="{{ route('hotel.show', $hotel->id) }}">{{ $hotel->nama }}</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Tambah Kamar Hotel</b>
+</li>
+@endsection

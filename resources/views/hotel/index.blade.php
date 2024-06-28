@@ -139,3 +139,9 @@
     // }
 </script>
 @endsection
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <b>Home</b>
+</li>
+@endsection

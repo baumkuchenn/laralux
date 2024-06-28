@@ -36,3 +36,17 @@
 <!-- END SAMPLE FORM PORTLET-->
 @endsection
 @section('judul-halaman', 'Tambah Tipe Kamar')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <a href="{{ route('producttype.index') }}">Daftar Tipe Kamar</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Tambah Tipe Hotel</b>
+</li>
+@endsection

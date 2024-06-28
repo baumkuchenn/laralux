@@ -37,3 +37,17 @@
 <!-- END SAMPLE FORM PORTLET-->
 @endsection
 @section('judul-halaman', 'Edit Tipe Hotel')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <a href="{{ route('hoteltype.index') }}">Daftar Tipe Hotel</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Edit Tipe Hotel {{ $data->nama }}</b>
+</li>
+@endsection

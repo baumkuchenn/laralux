@@ -52,8 +52,6 @@
             @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
             <td>
                 <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>
-            </td>
-            <td>
                 <form method="POST" action="{{ route('product.destroy', $item->id) }}">
                     @csrf
                     @method('DELETE')
@@ -68,3 +66,13 @@
 @endsection
 @section('judul-halaman', $hotel->nama)
 @section('title-halaman', 'Laralux.com | Daftar Hotel')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>{{ $hotel->nama }}</b>
+</li>
+@endsection

@@ -83,3 +83,13 @@
     <!-- END SAMPLE FORM PORTLET-->
 @endsection
 @section('judul-halaman', 'Tambah Hotel')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Tambah Hotel</b>
+</li>
+@endsection

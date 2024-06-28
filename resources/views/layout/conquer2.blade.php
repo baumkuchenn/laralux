@@ -54,7 +54,7 @@ License: You must have a valid license purchased only from themeforest(the above
         .gallery-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 10px;
             justify-content: center;
             padding: 20px;
         }
@@ -96,7 +96,6 @@ License: You must have a valid license purchased only from themeforest(the above
 
         .btn-group {
             display: flex;
-            gap: 10px;
         }
 
         .btn {
@@ -111,6 +110,7 @@ License: You must have a valid license purchased only from themeforest(the above
             cursor: pointer;
             border-radius: 4px;
             transition: background 0.2s;
+            margin-right: 10px;
         }
 
         .btn:hover {
@@ -288,11 +288,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 </h3>
                 <div class="page-bar">
                     <ul class="page-breadcrumb">
-                        <li>
-                            <i class="fa fa-home"></i>
-                            <a href="{{ url('hotel') }}">Home</a>
-                        </li>
                         <!-- Buat navigasi nanti bisa ditambahkan pakai yield-->
+                         @yield('navigasi')
                         <!-- <li>
                             <i class="fa fa-angle-right"></i>
                             <a href="#">Dashboard</a>

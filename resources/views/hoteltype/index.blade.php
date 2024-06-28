@@ -30,3 +30,13 @@
 </div>
 @endsection
 @section('judul-halaman', 'Daftar Tipe Hotel')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Daftar Tipe Hotel</b>
+</li>
+@endsection
