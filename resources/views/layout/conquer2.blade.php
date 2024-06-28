@@ -281,7 +281,7 @@ License: You must have a valid license purchased only from themeforest(the above
         @endif
         <!-- BEGIN CONTENT -->
         <div class="page-content-wrapper">
-            <div class="page-content @if(Auth::check()) logged-in @endif">
+            <div class="page-content @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff')) logged-in @endif">
                 <!-- BEGIN PAGE HEADER-->
                 <h3 class="page-title">
                     @yield('judul-halaman')

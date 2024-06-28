@@ -7,32 +7,33 @@
     @endif
     <div class="gallery-container">
         @foreach ($hotels as $d)
-        <div class="card">
-            <img src="{{ asset('images/thumbnail_hotel/' . $d->id . '.jpg') }}" alt="Hotel Logo">
-            <div class="card-body">
-                <h5 class="card-title">{{ $d->nama }}</h5>
-                <p class="card-text">{{ $d->alamat }}</p>
-                <div class="stars">
-                    @for ($i = 0; $i < $d->bintang; $i++)
-                        <i class="fa fa-star"></i>
-                        @endfor
-                </div>
-                <div>
-                    <p>{{ $d->type->nama }}</p>
-                </div>
-                <div class="btn-group">
-                    <a href="{{ route('hotel.show', $d->id) }}" class="btn">View</a>
-                    @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
-                    <a href="{{ route('hotel.edit', $d->id) }}" class="btn">Edit</a>
-                    <form method="POST" action="{{ route('hotel.destroy', $d->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <input type="submit" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure to delete {{ $d->id }} - {{ $d->nama }} ? ');">
-                    </form>
-                    @endif
+        <a href="{{ route('hotel.show', $d->id) }}">
+            <div class="card">
+                <img src="{{ asset('images/thumbnail_hotel/' . $d->id . '.jpg') }}" alt="Hotel Logo">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $d->nama }}</h5>
+                    <p class="card-text">{{ $d->alamat }}</p>
+                    <div class="stars">
+                        @for ($i = 0; $i < $d->bintang; $i++)
+                            <i class="fa fa-star"></i>
+                            @endfor
+                    </div>
+                    <div>
+                        <p>{{ $d->type->nama }}</p>
+                    </div>
+                    <div class="btn-group">
+                        @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
+                        <a href="{{ route('hotel.edit', $d->id) }}" class="btn">Edit</a>
+                        <form method="POST" action="{{ route('hotel.destroy', $d->id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure to delete {{ $d->id }} - {{ $d->nama }} ? ');">
+                        </form>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
         @endforeach
     </div>
 </main>
@@ -108,9 +109,9 @@
 
 @endsection
 @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
-    @section('judul-halaman', 'Daftar Hotel')
+@section('judul-halaman', 'Daftar Hotel')
 @else
-    @section('judul-halaman', 'Hotel di Indonesia')
+@section('judul-halaman', 'Hotel di Indonesia')
 @endif
 @section('title-halaman', 'Laralux.com | Hotel di Indonesia')
 @section('javascript')
