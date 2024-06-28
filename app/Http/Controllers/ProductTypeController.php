@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductTypeController extends Controller
 {
@@ -13,6 +14,8 @@ class ProductTypeController extends Controller
     public function index()
     {
         //
+        $type = ProductType::all();
+        return view('producttype.index', compact('type'));
     }
 
     /**
@@ -21,6 +24,7 @@ class ProductTypeController extends Controller
     public function create()
     {
         //
+        return view('producttype.formcreate');
     }
 
     /**
@@ -29,6 +33,11 @@ class ProductTypeController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new ProductType();
+        $data->nama = $request->get("type_name");
+        $data->save();
+
+        return redirect()->route('producttype.index')->with('status', 'Berhasil menambah data');
     }
 
     /**
@@ -42,24 +51,41 @@ class ProductTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductType $productType)
+    public function edit(string $id)
     {
         //
+        $data = ProductType::find($id);
+        return view('producttype.formedit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductType $productType)
+    public function update(Request $request, string $id)
     {
         //
+        $productType = ProductType::find($id);
+        $productType->nama = $request->type_name;
+        $productType->save();
+        return redirect()->route('producttype.index')->with('status', 'Berhasil Mengubah Data');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductType $productType)
+    public function destroy(string $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('employee-permission', $user);
+        try {
+            $data = ProductType::find($id);
+            $data->delete();
+            return redirect()->route('producttype.index')->with('status', 'Anda berhasil menghapus data');
+        } catch (\PDOException $ex) {
+            // Failed to delete data, then show exception message
+            $msg = "Terjadi kesalahan pada saat menghapus data";
+            return redirect()->route('producttype.index')->with('status', $msg);
+        }
     }
 }

@@ -244,15 +244,21 @@ License: You must have a valid license purchased only from themeforest(the above
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('rekap-produk') }}">
-                            <i class="icon-bar-chart"></i>
-                            <span class="title">Rekap Produk</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ url('hoteltype') }}">
                             <i class="icon-card-list"></i>
                             <span class="title">Daftar Tipe Hotel</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('producttype') }}">
+                            <i class="icon-card-list"></i>
+                            <span class="title">Daftar Tipe Kamar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('fasilitas') }}">
+                            <i class="icon-card-list"></i>
+                            <span class="title">Daftar Fasilitas</span>
                         </a>
                     </li>
                     <li>
