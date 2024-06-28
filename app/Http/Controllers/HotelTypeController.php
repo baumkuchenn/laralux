@@ -39,7 +39,7 @@ class HotelTypeController extends Controller
         $data->nama = $request->get("type_name");
         $data->save();
 
-        return redirect()->route('hoteltype.index')->with('status', 'Horray ! Your data is successfully recorded !');
+        return redirect()->route('hoteltype.index')->with('status', 'Berhasil menambah data');
     }
 
     /**

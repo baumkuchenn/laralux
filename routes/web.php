@@ -3,6 +3,7 @@
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelTypeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductTypeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::get('/', [HotelController::class, 'index']);
 
 Route::resource('hotel', HotelController::class);
 Route::resource('product', ProductController::class);
+// Route::resource('producttype', ProductType::class)->middleware('auth');
 // Route::get('/product/create/{id}', [ProductController::class, 'create'])->middleware('auth')->name('product.create');
 // Route::resource('hoteltype', HotelTypeController::class)->middleware('auth');
 
@@ -34,7 +36,9 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
     // Route::resource('hotel', HotelController::class);
     // Route::resource('product', ProductController::class);
     Route::resource('hoteltype', HotelTypeController::class);
+    // Route::resource('producttype', ProductType::class);
     Route::get('/product/create/{id}', [ProductController::class, 'create'])->name('product.create');
+    Route::resource('producttype', ProductTypeController::class);
 });
 
 // Rute untuk customer

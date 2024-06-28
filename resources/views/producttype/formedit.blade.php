@@ -9,7 +9,7 @@
     <div class="portlet">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-reorder"></i> Edit Tipe Hotel
+                <i class="fa fa-reorder"></i> Edit Tipe Kamar
             </div>
             <div class="tools">
                 <a href="" class="collapse"></a>
@@ -38,4 +38,4 @@
     </div>
     <!-- END SAMPLE FORM PORTLET-->
 @endsection
-@section('judul-halaman', 'Edit Tipe Hotel')
+@section('judul-halaman', 'Edit Tipe Kamar')

@@ -9,7 +9,7 @@
 <div class="portlet">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-reorder"></i> Masukkan Tipe Hotel
+            <i class="fa fa-reorder"></i> Masukkan Tipe Kamar
         </div>
         <div class="tools">
             <a href="" class="collapse"></a>
@@ -19,12 +19,12 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form method="POST" action="{{ route('hoteltype.store') }}">
+        <form method="POST" action="{{ route('producttype.store') }}">
             @csrf
             <div class="form-group">
-                <label for="exampleInputType">Nama Tipe Hotel</label>
+                <label for="exampleInputType">Nama Tipe Kamar</label>
                 <input type="text" class="form-control" id="exampleInputType" name="type_name" aria-describedby="nameHelp" placeholder="Masukkan Nama Tipe Hotel...">
-                <small id="nameHelp" class="form-text text-muted">Masukkan nama tipe hotel disini.</small>
+                <small id="nameHelp" class="form-text text-muted">Masukkan nama tipe kamar disini.</small>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -35,4 +35,4 @@
 </div>
 <!-- END SAMPLE FORM PORTLET-->
 @endsection
-@section('judul-halaman', 'Tambah Tipe Hotel')
+@section('judul-halaman', 'Tambah Tipe Kamar')
