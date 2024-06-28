@@ -7,7 +7,7 @@
         <div class="stars">
             @for ($i = 0; $i < $hotel->bintang; $i++)
                 <i class="fa fa-star"></i>
-            @endfor
+                @endfor
         </div>
         <h4><i class="fa fa-map-marker" style="font-size: 1em;"></i> {{$hotel->alamat}}</h4>
         <h4><i class="fa fa-envelope" style="font-size: 1em;"></i> {{$hotel->email}}</h4>
@@ -25,6 +25,7 @@
             <th>{{ $item->nama }} </th>
             <th>Fasilitas</th>
             <th>Harga/kamar/malam</th>
+            <th></th>
         </tr>
         <tr>
             <td>
@@ -38,6 +39,16 @@
                 </ul>
             </td>
             <td>{{ $item->price }}</td>
+            
+            @if (auth()->check() && (auth()->user()->role == 'customer'))
+            <td>
+                <div class="action">
+                    <a class="btn" href="{{route('addCart',$item->id)}}"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                    <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
+                </div>  
+            </td>
+            @endif
+            
             <td>
                 @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
                 <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Ubah</a>
