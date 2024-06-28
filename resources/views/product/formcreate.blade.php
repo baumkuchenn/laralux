@@ -57,3 +57,4 @@
 </div>
 <!-- END SAMPLE FORM PORTLET-->
 @endsection
+@section('judul-halaman', 'Tambah Kamar Hotel')
