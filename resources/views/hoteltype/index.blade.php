@@ -1,8 +1,6 @@
 @extends('layout.conquer2')
 @section('isi')
     <div class="container">
-        <a href="#disclaimer" data-toggle="modal">Disclaimer</a>
-        <h2>Daftar Tipe Hotel</h2>
         <a href="{{ route('hoteltype.create') }}" class="btn btn-xs btn-success mb-3">+ New Type</a>
         <table class="table">
             <thead>
@@ -32,3 +30,4 @@
         </table>
     </div>
 @endsection
+@section('judul-halaman', 'Daftar Tipe Hotel')

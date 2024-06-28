@@ -79,3 +79,4 @@
     </div>
     <!-- END SAMPLE FORM PORTLET-->
 @endsection
+@section('judul-halaman', 'Edit Hotel')

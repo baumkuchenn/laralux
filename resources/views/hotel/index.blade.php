@@ -107,8 +107,12 @@
 </div>
 
 @endsection
-@section('judul-halaman', 'Daftar Hotel')
-@section('title-halaman', 'Laralux.com | Daftar Hotel')
+@if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
+    @section('judul-halaman', 'Daftar Hotel')
+@else
+    @section('judul-halaman', 'Hotel di Indonesia')
+@endif
+@section('title-halaman', 'Laralux.com | Hotel di Indonesia')
 @section('javascript')
 <script>
     $('.tombol-produk').click(function() {
