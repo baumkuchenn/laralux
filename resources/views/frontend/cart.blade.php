@@ -1,6 +1,89 @@
 @extends('layout.conquer2')
 @section('isi')
 
+<style>
+    .cart-page-inner {
+        border: 1px solid #e0e0e0;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .coupon {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .coupon input[type="text"] {
+        width: calc(100% - 100px);
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .coupon button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .coupon button:hover {
+        background-color: #0056b3;
+    }
+
+    .cart-summary {
+        padding: 20px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .cart-content h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .cart-content h2 {
+        font-size: 20px;
+        color: #007bff;
+    }
+
+    .cart-btn {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .cart-btn a {
+        padding: 10px 20px;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        transition: background-color 0.3s;
+    }
+
+    .cart-btn .btn-primary {
+        background-color: #007bff;
+    }
+
+    .cart-btn .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .cart-btn .btn-success {
+        background-color: #28a745;
+    }
+
+    .cart-btn .btn-success:hover {
+        background-color: #218838;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
@@ -15,7 +98,7 @@
                                 <th>Product</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
-                                <th>Total</th>
+                                <th>Sub Total</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
@@ -24,8 +107,8 @@
                             <tr>
                                 <td>
                                     <div class="product-details">
-                                        <p>{{ $item['name'] }}</p>
-                                        <img height="200px" src="{{ asset('images/products/' . $item['id'] . '.jpg') }}" alt="Image">
+                                        <p style="font-weight:bold">{{ $item['name'] }}</p>
+                                        <img height="100px" src="{{ asset('images/products/' . $item['id'] . '.jpg') }}" alt="Image">
                                     </div>
                                 </td>
                                 <td>{{ 'IDR '. number_format($item['price'], 0, ',', '.') }}</td>
@@ -65,8 +148,17 @@
                 <div class="cart-summary">
                     <div class="cart-content">
                         <h1>Cart Summary</h1>
-                        <h2>Grand Total: {{ 'IDR '. number_format($total, 0, ',', '.') }}</h2>
+                        <div style="padding-left: 20px;"> <!-- Mengatur indentasi dengan padding -->
+                            <h4>Grand Total: {{ 'IDR '. number_format($total, 0, ',', '.') }}</h4>
+                            @php
+                            $ppn = $total * 0.11; // Menghitung PPN (11% dari grand total)
+                            $grandTotal = $total + $ppn; // Menambahkan PPN ke grand total
+                            @endphp
+                            <h4>PPN (11%): {{ 'IDR '. number_format($ppn, 0, ',', '.') }}</h4>
+                        </div>
+                        <h2>Total (including PPN): {{ 'IDR '. number_format($grandTotal, 0, ',', '.') }}</h2>
                     </div>
+
                     <div class="cart-btn">
                         <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Continue Shopping</a>
                         <a href="{{ route('checkout') }}" class="btn btn-xs btn-success">Checkout</a>
@@ -79,7 +171,10 @@
 
 
 @endsection
-@section('judul-halaman', 'Cart')
+@section('judul-halaman')
+<i class="fa fa-shopping-cart fa-5x"></i> Cart
+@endsection
+
 @section('title-halaman', 'Laralux.com | Daftar Hotel')
 
 @section('javascript')
