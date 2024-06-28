@@ -38,9 +38,9 @@
                     @endforeach
                 </ul>
             </td>
-            <td>{{ $item->price }}</td>
+            <td>{{ 'IDR '. number_format($item->price, 0, ',', '.') }}</td>
 
-            @if (auth()->check() && (auth()->user()->role == 'customer'))
+            @if (!auth()->check() || (auth()->user()->role == 'customer'))
             <td>
                 <div class="action">
                     <a class="btn" href="{{route('addCart',$item->id)}}"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
