@@ -20,13 +20,15 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
+                        <th style="width: 5%; text-align: center;">No.</th>
                         <th>Tanggal Transaksi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($transactions as $transaction)
+                    @foreach($transactions as $index => $transaction)
                     <tr>
+                        <td style="text-align: center;">{{ $index + 1 }}</td>
                         <td class="text-nowrap">{{ $transaction->created_at }}</td>
                         <td>
                             <a class="btn btn-info d-md-none" href="#detailModal" data-toggle="modal" onclick="getDetailData({{ $transaction->id }});">Lihat Rincian</a>
