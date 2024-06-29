@@ -11,7 +11,7 @@ class Transaction extends Model
 
     public function product()
     {
-        return $this->belongsToMany(Product::class, 'products_transactions', 'products_id', 'transactions_id')
+        return $this->belongsToMany(Product::class, 'products_transactions', 'transactions_id', 'products_id')
             ->withPivot('quantity', 'sub_total');;
     }
 
@@ -21,30 +21,32 @@ class Transaction extends Model
             ->withPivot('points');
     }
 
-    public function insertProducts($cart, $user)
+    public function insertProducts($cart, $t_id)
     {
         $total = 0;
         foreach ($cart as $c) {
             # code...
             $subtotal = $c['quantity'] * $c['price'];
             $total += $subtotal;
-            $this->product()->attach($c['id'], ['quantity' => $c['quantity'], 'sub_total' => $subtotal]);
+
+            // Debugging ID produk
+            // dd($t_id);
+            $this->product()->attach($c['id'], ['quantity' => $c['quantity'], 'sub_total' => $subtotal, 'transactions_id' => $t_id]);
         }
     }
 
-    public function membership($cart, $user)
+    public function membership($cart, $user, $t_id)
     {
         $points = $this->calculatePoints($cart); // Calculate points based on cart items
-
+        // dd($points);
         // Create or update membership record for the user
-        $membership = Membership::where('user_id', $user->id)->first();
+        // $membership = Membership::where('users_id', $user->id)->first();
 
-        if (!$membership) {
-            $membership = new Membership();
-            $membership->user_id = $user->id;
-        }
+        $membership = new Membership();
+        $membership->users_id = $user->id;
 
-        $membership->total_points += $points;
+        $membership->transactions_id = $t_id;
+        $membership->points += $points;
         $membership->save();
     }
 

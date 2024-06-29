@@ -19,16 +19,20 @@ class FrontEndController extends Controller
                 'name' => $product->nama,
                 'quantity' => 1,
                 'price' => $product->price,
+                'sub_total' => $product->price // Misalnya, sub_total dihitung di sini
             ];
         } else {
             $cart[$id]['quantity']++;
+            $cart[$id]['sub_total'] = $cart[$id]['quantity'] * $cart[$id]['price']; // Update sub_total jika kuantitas berubah
         }
 
         $cartItemCount = array_sum(array_column($cart, 'quantity'));
         session()->put('cart', $cart);
-        session()->put('cartItemCount', count(session()->get('cart')));
-        return redirect()->back()->with("status", "Produk berhasil ditambahkan ke Cart")->with('cartItemCount', $cartItemCount);;
+        session()->put('cartItemCount', $cartItemCount);
+
+        return redirect()->back()->with("status", "Produk berhasil ditambahkan ke Cart")->with('cartItemCount', $cartItemCount);
     }
+
 
     public function cart()
     {

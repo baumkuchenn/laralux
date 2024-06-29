@@ -80,7 +80,7 @@
                         <li>{{ $fasilitas->nama }}</li>
                         @endforeach
                     </ul>
-                </td>
+                </td> 
                 <td>{{ 'IDR '. number_format($item->price, 0, ',', '.') }}</td>
 
                 @if (!auth()->check() || (auth()->user()->role == 'customer'))
@@ -88,6 +88,9 @@
                     <a class="btn btn-primary" href="{{route('addCart',$item->id)}}">
                         <i class="fa fa-shopping-cart"></i> Add to Cart
                     </a>
+
+                    <input type="hidden" id="productType-{{ $item->id }}" value="{{ $item->producttype_id }}">
+
                 </td>
                 @endif
 
@@ -101,6 +104,7 @@
                     </form>
                 </td>
                 @endif
+                
             </tr>
             @endforeach
         </tbody>
