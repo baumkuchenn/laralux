@@ -87,6 +87,10 @@
 <div class="alert alert-success" style="font-weight: bold;">
     {{ session('status') }}
 </div>
+@elseif(session('error'))
+<div class="alert alert-danger" style="font-weight: bold;">
+    {{ session('error') }}
+</div>
 @endif
 
 <div class="container">

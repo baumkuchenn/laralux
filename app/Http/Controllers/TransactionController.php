@@ -68,6 +68,12 @@ class TransactionController extends Controller
     public function checkout()
     {
         $cart = session('cart');
+
+        // Cek apakah keranjang belanja kosong
+        if (empty($cart)) {
+            return redirect()->back()->with('error', 'Keranjang belanja kosong. Tidak dapat melakukan checkout.');
+        }
+
         $user = Auth::user();
         $t = new Transaction();
 
@@ -100,6 +106,6 @@ class TransactionController extends Controller
         // Clear cart
         session()->forget('cart');
 
-        return redirect()->route('cart')->with('status', 'Checkout berhasil');
+        return view('frontend.receipt')->with('status', 'Checkout berhasil');
     }
 }
