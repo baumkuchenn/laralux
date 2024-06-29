@@ -49,6 +49,14 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Toastr Notifications -->
+    <script>
+        @if(session('status'))
+        toastr.success("{{ session('status') }}");
+        @endif
+    </script>
 
     <style>
         .gallery-container {

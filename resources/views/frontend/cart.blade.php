@@ -83,6 +83,11 @@
         background-color: #218838;
     }
 </style>
+@if(session('status'))
+<div class="alert alert-success" style="font-weight: bold;">
+    {{ session('status') }}
+</div>
+@endif
 
 <div class="container">
     <div class="row">
@@ -161,7 +166,7 @@
 
                     <div class="cart-btn">
 
-                        <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Continue Shopping</a>
+                        <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Continue Searching</a>
                         <a href="{{ route('checkout') }}" class="btn btn-xs btn-success">Checkout</a>
                     </div>
                 </div>

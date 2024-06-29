@@ -27,7 +27,7 @@ class FrontEndController extends Controller
         $cartItemCount = array_sum(array_column($cart, 'quantity'));
         session()->put('cart', $cart);
         session()->put('cartItemCount', count(session()->get('cart')));
-        return redirect()->back()->with("status", "Produk Telah ditambahkan ke Cart")->with('cartItemCount', $cartItemCount);;
+        return redirect()->back()->with("status", "Produk berhasil ditambahkan ke Cart")->with('cartItemCount', $cartItemCount);;
     }
 
     public function cart()
@@ -74,6 +74,6 @@ class FrontEndController extends Controller
         }
         session()->forget('cart');
         session()->put('cart', $cart);
-        return redirect()->back()->with("status", "Produk Telah dibuang dari Cart");
+        return redirect()->back()->with("status", "Produk berhasil dihapus dari Cart");
     }
 }

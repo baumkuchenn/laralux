@@ -31,6 +31,11 @@
         width: auto;
     }
 </style>
+@if(session('status'))
+<div class="alert alert-success" style="font-weight: bold;">
+    {{ session('status') }}
+</div>
+@endif
 
 <div style="display: flex; align-items: flex-start;">
     <img class="img-thumbnail" src="{{ asset('images/thumbnail_hotel/'.$hotel->id.'.jpg') }}" />
