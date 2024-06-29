@@ -17,7 +17,7 @@ class Transaction extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'membership', 'users_id', 'transactions_id')
+        return $this->belongsToMany(User::class, 'memberships', 'users_id', 'transactions_id')
             ->withPivot('points');
     }
 

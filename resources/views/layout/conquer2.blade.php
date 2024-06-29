@@ -47,6 +47,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('assets/css/pages/tasks.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/themes/default.css') }}" rel="stylesheet" type="text/css" id="style_color" />
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
     <!-- Toastr CSS -->
@@ -161,12 +162,20 @@ License: You must have a valid license purchased only from themeforest(the above
             <ul class="nav navbar-nav pull-right">
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
                 @if (auth()->check() && (auth()->user()->role == 'customer'))
-                <li class="dropdown user">
+
+                <li class="dropdown user" data-toggle="tooltip" title="Cart">
                     <a href="{{ route('cart') }}" class="dropdown-toggle">
                         <i class="fa fa-shopping-cart"></i>
-                        <span class="badge">{{ session()->get('cartItemCount', 0) }}</span>
+                        <span class="badge badge-pill badge-primary">{{ session()->get('cartItemCount', 0) }}</span> <!-- Mengatur badge agar lebih jelas -->
                     </a>
                 </li>
+
+                <li class="dropdown user" data-toggle="tooltip" title="Riwayat Transaksi">
+                    <a href="{{ url('receipt') }}" class="dropdown-toggle">
+                        <i class="fa fa-dollar"></i>
+                    </a>
+                </li>
+
                 @endif
                 <!-- END TODO DROPDOWN -->
                 <li class="devider">

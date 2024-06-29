@@ -170,7 +170,7 @@
 
                     <div class="cart-btn">
 
-                        <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Continue Searching</a>
+                        <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Back to home</a>
                         <a href="{{ route('checkout') }}" class="btn btn-xs btn-success">Checkout</a>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
 
 @endsection
 @section('judul-halaman')
-<i class="fa fa-shopping-cart fa-5x"></i> Cart
+<i class="fa fa-shopping-cart fa-1x"></i> Cart
 @endsection
 
 @section('title-halaman', 'Laralux.com | Daftar Hotel')

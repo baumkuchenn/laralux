@@ -6,63 +6,40 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $userId = Auth::id();
+
+        $transactions = DB::table('transactions as t')
+            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+            ->join('users as u', 'u.id', '=', 'm.users_id')
+            ->select('m.*', 'u.*', 't.*')
+            ->where('u.id', '=', $userId)
+            ->get();
+
+        // dd($transactions);
+        return view('frontend.receipt', compact('transactions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function detail($id)
     {
-        //
-    }
+        $transaction = DB::table('transactions as t')
+        ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+        ->join('users as u', 'u.id', '=', 'm.users_id')
+        ->join('products_transactions as pt', 'pt.transactions_id', '=', 't.id')
+        ->join('products as p', 'p.id', '=', 'pt.products_id')
+        ->select('t.*', 'm.*', 'u.*', 'p.*', 'pt.*')
+        ->where('t.id', '=', $id)
+        ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // $transaction = $transaction->first();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // dd($transaction);
+        return view('frontend.detailreceipt', compact('transaction'));
     }
 
     public function checkout()
@@ -107,5 +84,15 @@ class TransactionController extends Controller
         session()->forget('cart');
 
         return redirect()->route('cart')->with('status', 'Checkout berhasil');
+    }
+
+    public function showAjax(Request $request)
+    {
+        $id = ($request->get('id'));
+        $data = Transaction::find($id);
+        $products = $data->products;
+        return response()->json(array(
+            'msg' => view('frontend.receipt', compact('data', 'products'))->render()
+        ), 200);
     }
 }

@@ -47,17 +47,20 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
 // Rute untuk customer
 Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
     // Route::resource('hotel', HotelController::class);
-    Route::get('laralux/cart', function(){
+    Route::get('laralux/cart', function () {
         return view('frontend.cart');
-        })->name('cart');
+    })->name('cart');
 
-        Route::get('laralux/cart/add/{id}', [FrontEndController::class, 'addToCart'])->name('addCart');
-        Route::get('laralux/cart/delete/{id}', [FrontEndController::class, 'deleteFromCart'])->name('delFromCart');
-        Route::post('laralux/cart/addQty', [FrontEndController::class, 'addQuantity'])->name('addQty');
-        Route::post('laralux/cart/reduceQty', [FrontEndController::class, 'reduceQuantity'])->name('redQty');
-        Route::get('laralux/cart/checkout',[TransactionController::class,'checkout'])->name('checkout');
-        
-        
+    // Route untuk receipt
+    Route::resource('receipt', TransactionController::class);
+    Route::get('transactions/detail/{id}', [TransactionController::class, 'detail'])->name('transactions.detail');
+
+    
+    Route::get('laralux/cart/add/{id}', [FrontEndController::class, 'addToCart'])->name('addCart');
+    Route::get('laralux/cart/delete/{id}', [FrontEndController::class, 'deleteFromCart'])->name('delFromCart');
+    Route::post('laralux/cart/addQty', [FrontEndController::class, 'addQuantity'])->name('addQty');
+    Route::post('laralux/cart/reduceQty', [FrontEndController::class, 'reduceQuantity'])->name('redQty');
+    Route::get('laralux/cart/checkout', [TransactionController::class, 'checkout'])->name('checkout');
 });
 
 Auth::routes();
