@@ -106,6 +106,6 @@ class TransactionController extends Controller
         // Clear cart
         session()->forget('cart');
 
-        return view('frontend.receipt')->with('status', 'Checkout berhasil');
+        return redirect()->route('cart')->with('status', 'Checkout berhasil');
     }
 }
