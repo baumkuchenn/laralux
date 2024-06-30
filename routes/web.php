@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\FrontEndController;
+use App\Http\Controllers\MembershipController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,8 @@ Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
     Route::resource('receipt', TransactionController::class);
     Route::get('transactions/detail/{id}', [TransactionController::class, 'detail'])->name('transactions.detail');
 
+    // Route untuk poin membership
+    Route::resource('membership', MembershipController::class);
     
     Route::get('laralux/cart/add/{id}', [FrontEndController::class, 'addToCart'])->name('addCart');
     Route::get('laralux/cart/delete/{id}', [FrontEndController::class, 'deleteFromCart'])->name('delFromCart');

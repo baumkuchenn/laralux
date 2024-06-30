@@ -130,6 +130,12 @@ License: You must have a valid license purchased only from themeforest(the above
             color: #FFD700;
             margin-bottom: 10px;
         }
+
+        .dropdown.user .dropdown-toggle span {
+            margin-left: 5px;
+            font-weight: bold;
+            color: #ddd;
+        }
     </style>
 </head>
 <!-- END HEAD -->
@@ -165,14 +171,32 @@ License: You must have a valid license purchased only from themeforest(the above
 
                 <li class="dropdown user" data-toggle="tooltip" title="Cart">
                     <a href="{{ route('cart') }}" class="dropdown-toggle">
+                        <span>Cart</span>
                         <i class="fa fa-shopping-cart"></i>
-                        <span class="badge badge-pill badge-primary">{{ session()->get('cartItemCount', 0) }}</span> <!-- Mengatur badge agar lebih jelas -->
+                        <span class="badge badge-pill badge-primary">{{ session()->get('cartItemCount', 0) }}</span>
+
                     </a>
+                </li>
+                <li class="devider">
+                    &nbsp;
                 </li>
 
                 <li class="dropdown user" data-toggle="tooltip" title="Riwayat Transaksi">
                     <a href="{{ url('receipt') }}" class="dropdown-toggle">
+                        <span>Riwayat Transaksi</span>
                         <i class="fa fa-dollar"></i>
+
+                    </a>
+                </li>
+                <li class="devider">
+                    &nbsp;
+                </li>
+
+                <li class="dropdown user" data-toggle="tooltip" title="Membership">
+                    <a href="{{ url('membership') }}" class="dropdown-toggle">
+                        <span>Membership</span>
+                        <i class="fa fa-list-alt"></i>
+
                     </a>
                 </li>
 
