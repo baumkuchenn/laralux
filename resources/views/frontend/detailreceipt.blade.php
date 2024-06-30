@@ -5,7 +5,23 @@
 @else
 <div class="container">
     <div class="row mb-3">
-        <div class="col-md-6 highlight-bg" >
+        <div class="col-md-6 highlight-bg">
+            <p><strong>ID Transaksi:</strong></p>
+        </div>
+        <div class="col-md-6">
+            <p>ID{{ $firstTransaction->transactions_id }}{{ \Carbon\Carbon::parse($firstTransaction->transaction_date)->format('dmY') }}</p>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6 highlight-bg">
+            <p><strong>Nama Pemesan:</strong></p>
+        </div>
+        <div class="col-md-6">
+            <p>{{ $firstTransaction->name }}</p>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6 highlight-bg">
             <p><strong>Tanggal Transaksi:</strong></p>
         </div>
         <div class="col-md-6">
