@@ -48,9 +48,11 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
 // Rute untuk customer
 Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
     // Route::resource('hotel', HotelController::class);
-    Route::get('laralux/cart', function () {
-        return view('frontend.cart');
-    })->name('cart');
+    // Route::get('laralux/cart', function () {
+    //     return view('frontend.cart');
+    // })->name('cart');
+
+    Route::get('laralux/cart', [FrontEndController::class, 'cart'])->name('cart');
 
     // Route untuk receipt
     Route::resource('receipt', TransactionController::class);

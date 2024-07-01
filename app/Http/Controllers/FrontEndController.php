@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FrontEndController extends Controller
 {
@@ -19,7 +21,7 @@ class FrontEndController extends Controller
                 'name' => $product->nama,
                 'quantity' => 1,
                 'price' => $product->price,
-                'sub_total' => $product->price // Misalnya, sub_total dihitung di sini
+                'sub_total' => $product->price // sub_total dihitung di sini
             ];
         } else {
             $cart[$id]['quantity']++;
@@ -36,7 +38,17 @@ class FrontEndController extends Controller
 
     public function cart()
     {
-        return view('frontend.cart');
+        $userId = Auth::id();
+
+        // Query untuk mengambil total poin dari membership
+        $points = DB::table('transactions as t')
+            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+            ->join('users as u', 'u.id', '=', 'm.users_id')
+            ->where('u.id', '=', $userId)
+            ->where('m.points', '>', '0')
+            ->sum('m.points');
+
+        return view('frontend.cart', compact('points'));
     }
 
     public function addQuantity(Request $request)
