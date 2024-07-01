@@ -32,7 +32,8 @@ class TransactionController extends Controller
         ->join('users as u', 'u.id', '=', 'm.users_id')
         ->join('products_transactions as pt', 'pt.transactions_id', '=', 't.id')
         ->join('products as p', 'p.id', '=', 'pt.products_id')
-        ->select('t.*', 'm.*', 'u.*', 'p.*', 'pt.*')
+        ->join('hotels as h', 'h.id', '=', 'p.hotel_id')
+        ->select('t.*', 't.created_at as transaction_date', 'm.*', 'u.*', 'p.*', 'pt.*', 'h.nama as nama_hotel')
         ->where('t.id', '=', $id)
         ->get();
 

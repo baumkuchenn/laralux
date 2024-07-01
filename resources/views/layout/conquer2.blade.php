@@ -169,6 +169,9 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
                 @if (auth()->check() && (auth()->user()->role == 'customer'))
 
+                <li class="devider">
+                    &nbsp;
+                </li>
                 <li class="dropdown user" data-toggle="tooltip" title="Cart">
                     <a href="{{ route('cart') }}" class="dropdown-toggle">
                         <span>Cart</span>
@@ -211,7 +214,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <img alt="" src="{{ asset('assets/img/guest.jpg') }}" />
                         <span class="username username-hide-on-mobile">
                             @if (Auth::check())
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->name }} ({{ Auth::user()->role }})
                             @else
                             Guest
                             @endif
@@ -314,7 +317,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li>
                         <a href="{{ url('customer') }}">
                             <i class="fa fa-users"></i>
-                            <span class="title">Daftar Customer</span>
+                            <span class="title">Daftar Membership</span>
                         </a>
                     </li>
                 </ul>
