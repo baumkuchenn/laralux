@@ -28,14 +28,14 @@ class TransactionController extends Controller
     public function detail($id)
     {
         $transaction = DB::table('transactions as t')
-        ->join('memberships as m', 'm.transactions_id', '=', 't.id')
-        ->join('users as u', 'u.id', '=', 'm.users_id')
-        ->join('products_transactions as pt', 'pt.transactions_id', '=', 't.id')
-        ->join('products as p', 'p.id', '=', 'pt.products_id')
-        ->join('hotels as h', 'h.id', '=', 'p.hotel_id')
-        ->select('t.*', 't.created_at as transaction_date', 'm.*', 'u.*', 'p.*', 'pt.*', 'h.nama as nama_hotel')
-        ->where('t.id', '=', $id)
-        ->get();
+            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+            ->join('users as u', 'u.id', '=', 'm.users_id')
+            ->join('products_transactions as pt', 'pt.transactions_id', '=', 't.id')
+            ->join('products as p', 'p.id', '=', 'pt.products_id')
+            ->join('hotels as h', 'h.id', '=', 'p.hotel_id')
+            ->select('t.*', 't.created_at as transaction_date', 'm.*', 'u.*', 'p.*', 'pt.*', 'h.nama as nama_hotel')
+            ->where('t.id', '=', $id)
+            ->get();
 
         // $transaction = $transaction->first();
 
@@ -49,7 +49,7 @@ class TransactionController extends Controller
 
         // Cek apakah keranjang belanja kosong
         if (empty($cart)) {
-            return redirect()->back()->with('error', 'Yahh, masih kosong nih. Yuk tambah produk dulu baru bisa checkout.');
+            return response()->json(['error' => 'Yahh, masih kosong nih. Yuk tambah produk dulu baru bisa checkout.'], 400);
         }
 
         $user = Auth::user();
@@ -84,7 +84,7 @@ class TransactionController extends Controller
         // Clear cart
         session()->forget('cart');
 
-        return redirect()->route('cart')->with('status', 'Yeay! Checkout berhasil. Enjoyyy');
+        return response()->json(['success' => 'Yeay! Checkout berhasil. Enjoyyy'], 200);
     }
 
     public function showAjax(Request $request)

@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
     Route::get('laralux/cart/delete/{id}', [FrontEndController::class, 'deleteFromCart'])->name('delFromCart');
     Route::post('laralux/cart/addQty', [FrontEndController::class, 'addQuantity'])->name('addQty');
     Route::post('laralux/cart/reduceQty', [FrontEndController::class, 'reduceQuantity'])->name('redQty');
-    Route::get('laralux/cart/checkout', [TransactionController::class, 'checkout'])->name('checkout');
+    Route::post('laralux/cart/checkout', [TransactionController::class, 'checkout'])->name('checkout');
 });
 
 Auth::routes();
