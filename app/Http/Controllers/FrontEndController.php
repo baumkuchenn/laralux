@@ -30,7 +30,7 @@ class FrontEndController extends Controller
         session()->put('cart', $cart);
         session()->put('cartItemCount', $cartItemCount);
 
-        return redirect()->back()->with("status", "Produk berhasil ditambahkan ke Cart")->with('cartItemCount', $cartItemCount);
+        return redirect()->back()->with("status", "Yeayy, produk berhasil ditambahkan ke Cart")->with('cartItemCount', $cartItemCount);
     }
 
 
@@ -78,6 +78,6 @@ class FrontEndController extends Controller
         }
         session()->forget('cart');
         session()->put('cart', $cart);
-        return redirect()->back()->with("status", "Produk berhasil dihapus dari Cart");
+        return redirect()->back()->with("status", "Produk berhasil dihapus dari Cart sii, cuma sayang banget gajadi beli, huhu :(");
     }
 }

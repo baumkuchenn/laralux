@@ -214,7 +214,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <img alt="" src="{{ asset('assets/img/guest.jpg') }}" />
                         <span class="username username-hide-on-mobile">
                             @if (Auth::check())
-                            {{ Auth::user()->name }} ({{ Auth::user()->role }})
+                            Hai! {{ Auth::user()->name }} ({{ Auth::user()->role }})
                             @else
                             Guest
                             @endif

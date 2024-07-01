@@ -49,7 +49,7 @@ class TransactionController extends Controller
 
         // Cek apakah keranjang belanja kosong
         if (empty($cart)) {
-            return redirect()->back()->with('error', 'Keranjang belanja kosong. Tidak dapat melakukan checkout.');
+            return redirect()->back()->with('error', 'Yahh, masih kosong nih. Yuk tambah produk dulu baru bisa checkout.');
         }
 
         $user = Auth::user();
@@ -84,7 +84,7 @@ class TransactionController extends Controller
         // Clear cart
         session()->forget('cart');
 
-        return redirect()->route('cart')->with('status', 'Checkout berhasil');
+        return redirect()->route('cart')->with('status', 'Yeay! Checkout berhasil. Enjoyyy');
     }
 
     public function showAjax(Request $request)
