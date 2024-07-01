@@ -16,14 +16,24 @@ class MembershipController extends Controller
 
         $userId = Auth::id();
 
-        $transactions = DB::table('transactions as t')
+        $membership = DB::table('transactions as t')
             ->join('memberships as m', 'm.transactions_id', '=', 't.id')
             ->join('users as u', 'u.id', '=', 'm.users_id')
             ->select('m.*', 'u.*', 't.*')
             ->where('u.id', '=', $userId)
+            ->where('m.points', '>', '0')
             ->get();
 
+        $points = DB::table('transactions as t')
+            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+            ->join('users as u', 'u.id', '=', 'm.users_id')
+            ->select('m.*', 'u.*', 't.*')
+            ->where('u.id', '=', $userId)
+            ->where('m.points', '>', '0')
+            ->sum('m.points');
+            
         // dd($transactions);
-        return view('frontend.receipt', compact('transactions'));
+        return view('frontend.membership', compact('membership','points'));
     }
+
 }

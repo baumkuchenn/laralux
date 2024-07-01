@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
 
     // Route untuk poin membership
     Route::resource('membership', MembershipController::class);
+    Route::get('membership/detail/{id}',[MembershipController::class, 'detail'])->name('membership.detail');
     
     Route::get('laralux/cart/add/{id}', [FrontEndController::class, 'addToCart'])->name('addCart');
     Route::get('laralux/cart/delete/{id}', [FrontEndController::class, 'deleteFromCart'])->name('delFromCart');
