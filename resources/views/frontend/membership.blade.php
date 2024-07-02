@@ -18,7 +18,7 @@
                 <h1 style="font-size: 2.5rem; color: #007bff; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
                     Poin Anda Saat Ini: {{$points}}
                 </h1>
-                <h2 class="card-title flex-grow-1">Detail Poin yang Didapat:</h2>
+                <h2 class="card-title flex-grow-1">Detail Poin yang didapat:</h2>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
@@ -41,7 +41,11 @@
                         </tr>
                         @endif
                         @endforeach
-
+                        @if ($membership->where('points', '>', 0)->isEmpty())
+                        <tr>
+                            <td colspan="3" style="text-align: center;">Tidak ada poin yang didapat.</td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -69,7 +73,11 @@
                         </tr>
                         @endif
                         @endforeach
-
+                        @if ($membership->where('redeempoints', '>', 0)->isEmpty())
+                        <tr>
+                            <td colspan="3" style="text-align: center;">Tidak ada poin yang ditukarkan.</td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
