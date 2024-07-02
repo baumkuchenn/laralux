@@ -100,6 +100,34 @@
         color: #3c763d;
         border-color: #d6e9c6;
     }
+
+    .highlight-text {
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .total-payment {
+        background-color: #e0f7fa;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #007bff;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .total-amount {
+        color: green;
+        padding: 5px;
+        font-size: 1.4em;
+        font-weight: bold;
+    }
+
+    .points-info {
+        margin-top: 20px;
+        font-size: 1.1em;
+        color: #007bff;
+        font-weight: bold;
+    }
 </style>
 
 @if(session('status'))
@@ -177,17 +205,18 @@
                     <div class="cart-content">
                         <h1>Cart Summary</h1>
                         <div style="padding-left: 20px;">
-                            <h4>Grand Total: <span id="grandTotal">{{ 'IDR '. number_format($total, 0, ',', '.') }}</span></h4>
+                            <h4>Grand Total: <span id="grandTotal" class="highlight-text">{{ 'IDR '. number_format($total, 0, ',', '.') }}</span></h4>
                             @php
                             $ppn = $total * 0.11;
                             $grandTotal = $total + $ppn;
                             @endphp
-                            <h4>PPN (11%): {{ 'IDR '. number_format($ppn, 0, ',', '.') }}</h4>
+                            <h4>PPN (11%): <span class="highlight-text">{{ 'IDR '. number_format($ppn, 0, ',', '.') }}</span></h4>
                         </div>
-                        <h2>Total (including PPN): <span id="grandTotalAfterPoints">{{ 'IDR '. number_format($grandTotal, 0, ',', '.') }}</span></h2>
+                        <h2 class="total-payment">Total akhir yang harus dibayar: <br>
+                        <span id="grandTotalAfterPoints" class="total-amount">{{ 'IDR '. number_format($grandTotal, 0, ',', '.') }}</span></h2>
                     </div>
 
-                    <h4 style="margin-top: 20px;">Poin Anda: {{ $points }}</h4>
+                    <h4 class="points-info">Poin Anda: {{ $points }}</h4>
                     <form id="redemptionForm">
                         <label for="redemptionPoints">Redeem Points:</label>
                         <input type="number" id="redemptionPoints" name="redemptionPoints" min="0" max="{{ $points }}" value="0">
@@ -200,6 +229,7 @@
                         <button id="checkoutButton" class="btn btn-xs btn-success">Checkout</button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -294,7 +324,11 @@
 
     document.getElementById('checkoutButton').addEventListener('click', function(event) {
         event.preventDefault();
-        $('#confirmCheckoutModal').modal('show');
+        calculateTotal(); // Panggil calculateTotal sebelum checkout
+        setTimeout(function() {
+            // Proses checkout setelah kalkulasi selesai
+            $('#confirmCheckoutModal').modal('show');
+        }, 1000); // Berikan waktu untuk AJAX selesai
     });
 
     document.getElementById('confirmCheckoutButton').addEventListener('click', function() {

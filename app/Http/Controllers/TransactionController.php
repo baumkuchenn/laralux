@@ -43,7 +43,7 @@ class TransactionController extends Controller
         return view('frontend.detailreceipt', compact('transaction'));
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
         $cart = session('cart');
 
@@ -57,20 +57,35 @@ class TransactionController extends Controller
 
         $t->transaction_date = Carbon::now()->toDateTimeString();
 
-        $grandTotal = array_sum(array_column($cart, 'sub_total')); // Total sebelum PPN
-        // Hitung PPN
-        $ppn = $grandTotal * 0.11; // PPN 11%
+        // Ambil data perhitungan dari sesi
+        $calculatedTotal = session('calculated_total');
+
+        if (!$calculatedTotal) {
+            return response()->json(['error' => 'Data perhitungan tidak ditemukan. Silakan coba lagi.'], 400);
+        }
+
+        // PPN
+        $ppn = $calculatedTotal['ppn']; // PPN 11%
         $t->ppn = $ppn;
-        $grandTotal += $ppn; // Total setelah ditambah PPN
-        $t->total = $grandTotal;
+
+        // Total setelah dikurangi penukaran poin
+        $grandTotalAfterPoints = $calculatedTotal['grandTotalAfterPoints'];
+        $t->total = $grandTotalAfterPoints; 
+
+        // Penukaran poin setara IDR
+        $pointsToMoney = $calculatedTotal['pointsToMoney'];
+        $t->penukaran_poin = $pointsToMoney;
 
         $t->save();
+
+        // Ambil jumlah poin yang ingin ditukarkan dari sesion
+        $redeemedPoints = $calculatedTotal['pointsToRedeem'];
 
         $t_id = $t->id;
 
         // Insert into junction table product_transaction using eloquent
         $t->insertProducts($cart, $t_id);
-        $t->membership($cart, $user, $t_id);
+        $t->membership($cart, $user, $t_id, $redeemedPoints);
 
         // Simpan total dan poin member ke dalam transaksi
         $t->save();

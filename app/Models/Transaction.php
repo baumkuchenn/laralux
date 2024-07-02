@@ -23,19 +23,16 @@ class Transaction extends Model
 
     public function insertProducts($cart, $t_id)
     {
-        $total = 0;
         foreach ($cart as $c) {
-            # code...
-            $subtotal = $c['quantity'] * $c['price'];
-            $total += $subtotal;
+            $subtotal = $c['quantity'] * $c['price'];        
 
-            // Debugging ID produk
+            // Debugging
             // dd($t_id);
             $this->product()->attach($c['id'], ['quantity' => $c['quantity'], 'sub_total' => $subtotal, 'transactions_id' => $t_id]);
         }
     }
 
-    public function membership($cart, $user, $t_id)
+    public function membership($cart, $user, $t_id, $redeemedPoints)
     {
         $points = $this->calculatePoints($cart); // Calculate points based on cart items
         // dd($points);
@@ -44,9 +41,10 @@ class Transaction extends Model
 
         $membership = new Membership();
         $membership->users_id = $user->id;
-
         $membership->transactions_id = $t_id;
+        
         $membership->points += $points;
+        $membership->redeempoints = $redeemedPoints;
         $membership->save();
     }
 

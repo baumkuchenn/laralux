@@ -13,6 +13,12 @@
         background-color: #e9ecef;
     }
 
+    .highlight-bg2 {
+    background-color: #f9f9f9; /* Warna latar belakang yang ringan untuk highlight */
+    padding: 10px;
+    border-radius: 5px;
+}
+
     .table thead th {
         background-color: #343a40;
         color: #fff;
@@ -49,6 +55,34 @@
 
     strong {
         font-weight: bold;
+    }
+
+    .highlight-text {
+        color: #007bff;
+        /* Warna teks yang menonjol */
+        font-weight: bold;
+        font-size: 1.2em;
+        /* Ukuran teks yang lebih besar */
+    }
+
+    .highlight-border {
+        border: 2px solid #007bff;
+        /* Border berwarna untuk highlight */
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .total-summary {
+        background-color: #e0f7fa;
+        /* Warna latar belakang khusus untuk total akhir */
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #007bff;
+        /* Border untuk highlight */
+        font-size: 1.2em;
+        /* Ukuran teks yang lebih besar */
+        font-weight: bold;
+        text-align: center;
     }
 </style>
 
@@ -121,36 +155,44 @@
     </div>
 
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-md-6 highlight-bg">
             <p><strong>Poin yang ditukar:</strong></p>
         </div>
         <div class="col-md-6">
-            <p>{{ $firstTransaction->redeempoints }} (Mendapat potongan IDR {{ ($firstTransaction->redeempoints) * 100000 }})</p>
+            <p>{{ $firstTransaction->redeempoints }}</p>
         </div>
     </div>
+
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-md-6 highlight-bg">
             <p><strong>Poin yang Didapat:</strong></p>
         </div>
         <div class="col-md-6">
             <p>{{ $firstTransaction->points }}</p>
         </div>
     </div>
+
     <div class="row mb-3">
-        <div class="col-md-6">
-            <p><strong>Total:</strong></p>
+        <div class="col-md-6 highlight-bg2 highlight-border">
+            <p class="highlight-text">Total sebelum penukaran:</p>
         </div>
-        <div class="col-md-6">
-            <p>IDR {{ number_format($firstTransaction->total, 0, ',', '.') }}</p>
+        <div class="col-md-6 highlight-bg2 highlight-border">
+            <p class="highlight-text">IDR {{ number_format(($firstTransaction->total)+($firstTransaction->penukaran_poin), 0, ',', '.') }} <span style="font-size: 15px; color: lightgreen;">(Include PPN 11%)</span></p>
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-md-6">
-            <p><strong>PPN (11%):</strong></p>
+        <div class="col-md-6 highlight-bg2 highlight-border">
+            <p class="highlight-text">Penukaran poin setara:</p>
         </div>
-        <div class="col-md-6">
-            <p>IDR {{ number_format($firstTransaction->ppn, 0, ',', '.') }}</p>
+        <div class="col-md-6 highlight-bg2 highlight-border">
+            <p class="highlight-text">IDR {{ number_format($firstTransaction->penukaran_poin, 0, ',', '.') }}</p>
         </div>
     </div>
+    <div class="row mb-3">
+        <div class="col-md-12 total-summary">
+            <p>Total akhir yang dibayar: IDR {{ number_format($firstTransaction->total, 0, ',', '.') }}</p>
+        </div>
+    </div>
+
 </div>
 @endif

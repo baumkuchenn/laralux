@@ -41,12 +41,11 @@ class FrontEndController extends Controller
         $userId = Auth::id();
 
         // Query untuk mengambil total poin dari membership
-        $points = DB::table('transactions as t')
-            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+        $points = DB::table('memberships as m')
             ->join('users as u', 'u.id', '=', 'm.users_id')
             ->where('u.id', '=', $userId)
-            ->where('m.points', '>', '0')
-            ->sum('m.points');
+            ->sum(DB::raw('m.points - COALESCE(m.redeempoints, 0)'));
+
 
         return view('frontend.cart', compact('points'));
     }
@@ -113,7 +112,7 @@ class FrontEndController extends Controller
 
         // Hitung PPN
         $ppn = $grandTotal * 0.11; // PPN 11%
-        $grandTotal += $ppn; // Total setelah ditambah PPN
+        $grandTotalAfterPpn = $grandTotal + $ppn; // Total setelah ditambah PPN
 
         // ambil data poin
         $userPoints = DB::table('memberships')
@@ -126,14 +125,24 @@ class FrontEndController extends Controller
         // Cek apakah poin yang ditukarkan melebihi total belanja atau melebihi poin yang dipunya
         if ($pointsToRedeem > $userPoints) {
             return response()->json(['error' => 'Poin tidak cukup.'], 400);
-        }
-        elseif ($pointsToMoney > $grandTotal) {
+        } elseif ($pointsToMoney > $grandTotal) {
             $maxPoints = floor($grandTotal / 100000);
             return response()->json(['error' => 'Poin yang ditukarkan melebihi total belanja. Maksimal poin yang dapat ditukarkan adalah ' . $maxPoints . '.'], 400);
         }
 
         // Hitung total setelah penukaran poin
-        $grandTotalAfterPoints = $grandTotal - $pointsToMoney;
+        $grandTotalAfterPoints = $grandTotalAfterPpn - $pointsToMoney;
+
+        // Simpan data perhitungan di sesi
+        session()->put('calculated_total', [
+            'grandTotal' => $grandTotal,
+            'ppn' => $ppn,
+            'grandTotalAfterPpn' => $grandTotalAfterPpn,
+            'pointsToMoney' => $pointsToMoney,
+            'grandTotalAfterPoints' => $grandTotalAfterPoints,
+            'pointsToRedeem' => $pointsToRedeem,
+            'userPoints' => $userPoints
+        ]);
 
         return response()->json([
             'grandTotal' => number_format($grandTotal, 0, ',', '.'),

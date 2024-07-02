@@ -18,7 +18,7 @@
                 <h1 style="font-size: 2.5rem; color: #007bff; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
                     Poin Anda Saat Ini: {{$points}}
                 </h1>
-                <h2 class="card-title flex-grow-1">Detail Poin Anda:</h2>
+                <h2 class="card-title flex-grow-1">Detail Poin yang Didapat:</h2>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
@@ -31,12 +31,45 @@
                     </thead>
                     <tbody>
                         @foreach($membership as $index => $m)
+                        @if ($m->points)
                         <tr>
-                            <td style="text-align: center; background-color: lightgreen;"><i class="fa fa-check-square-o"></i></td>
+                            <td style="text-align: center; background-color: lightgreen;">
+                                <i class="fa fa-check-square-o"></i>
+                            </td>
                             <td class="text-nowrap">{{ \Carbon\Carbon::parse($m->created_at)->format('d-m-Y H:i') }}</td>
-                            <td class="text-nowrap">{{$m->points}}</td>
+                            <td class="text-nowrap">{{ $m->points }}</td>
                         </tr>
+                        @endif
                         @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tabel Poin yang Ditukarkan -->
+            <h2 class="card-title flex-grow-1 mt-4">Detail Poin yang Ditukarkan:</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 5%; text-align: center;"></th>
+                            <th>Ditukarkan pada Transaksi</th>
+                            <th>Poin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($membership as $index => $m)
+                        @if ($m->redeempoints)
+                        <tr>
+                            <td style="text-align: center; background-color: red;">
+                                <i class="fa fa-check-square-o"></i>
+                            </td>
+                            <td class="text-nowrap">{{ \Carbon\Carbon::parse($m->created_at)->format('d-m-Y H:i') }}</td>
+                            <td class="text-nowrap">{{ $m->redeempoints }}</td>
+                        </tr>
+                        @endif
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>
