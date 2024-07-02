@@ -28,7 +28,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" /> -->
+    <script src="https://kit.fontawesome.com/2ca9da1951.js" crossorigin="anonymous"></script>
     <link href="{{ asset('assets/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css" />
@@ -238,26 +239,26 @@ License: You must have a valid license purchased only from themeforest(the above
                     </li>
                     <li class="start active ">
                         <a href="{{ url('hotel') }}">
-                            <i class="icon-home"></i>
+                            <i class="fa fa-home"></i>
                             <span class="title">Daftar Hotel</span>
                             <span class="selected"></span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('hoteltype') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa-solid fa-hotel"></i>
                             <span class="title">Daftar Tipe Hotel</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('producttype') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-bed"></i>
                             <span class="title">Daftar Tipe Kamar</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('fasilitas') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-utensils"></i>
                             <span class="title">Daftar Fasilitas</span>
                         </a>
                     </li>

@@ -50,6 +50,17 @@
                 <small id="thumbnailHelp" class="form-text text-muted">Upload thumbnail hotel disini.</small>
             </div>
 
+            <div class="form-group">
+                <label for="facility">Fasilitas Kamar</label>
+                <div class="form-check">
+                    @foreach ($fasilitas as $f)
+                    <input type="checkbox" class="form-check-input" id="facility_{{ $f->id }}" name="fasilitas_product[]" value="{{ $f->id }}">
+                    <label class="form-check-label" for="facility_{{ $f->id }}">{{ $f->nama }}</label>
+                    @endforeach
+                </div>
+                <small class="form-text text-muted">Pilih fasilitas kamar dari list berikut.</small>
+            </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 

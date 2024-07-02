@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fasilitas;
 use App\Models\Hotel;
 use App\Models\Product;
 use App\Models\ProductType;
@@ -30,7 +31,8 @@ class ProductController extends Controller
 
         $types = ProductType::all();
         $hotel = Hotel::find($id);
-        return view('product.formcreate', compact('types', 'hotel'));
+        $fasilitas = Fasilitas::all();
+        return view('product.formcreate', compact('types', 'hotel', 'fasilitas'));
     }
 
     /**
