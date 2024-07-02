@@ -52,6 +52,17 @@
                 <small id="thumbnailHelp" class="form-text text-muted">Upload gambar kamar disini.</small>
             </div>
 
+            <div class="form-group">
+                <label for="facility">Fasilitas Kamar</label>
+                <div class="form-check">
+                    @foreach ($fasilitas as $f)
+                    <input type="checkbox" class="form-check-input" id="facility_{{ $f->id }}" name="fasilitas_product[]" value="{{ $f->id }}" @if (in_array($f->id, $associatedFacilityIds)) checked @endif>
+                    <label class="form-check-label" for="facility_{{ $f->id }}">{{ $f->nama }}</label>
+                    @endforeach
+                </div>
+                <small class="form-text text-muted">Pilih fasilitas kamar dari list berikut.</small>
+            </div>
+
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
 

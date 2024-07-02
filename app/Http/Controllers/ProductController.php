@@ -44,6 +44,8 @@ class ProductController extends Controller
         $user = Auth::user();
         $this->authorize('employee-permission', $user);
 
+        $selectedFacilities = $request->input('fasilitas_product');
+
         $data = new Product();
         $data->nama = $request->get('product_name');
         $data->hotel_id = $request->get('hotel_id');
@@ -54,6 +56,8 @@ class ProductController extends Controller
         $file = $request->file('gambar_kamar');
         $filename = $data->id . '.' . 'jpg';
         $file->move('images/products', $filename);
+
+        $data->fasilitas()->attach($selectedFacilities);
 
         return redirect()->route('hotel.show', $request->get('hotel_id'))->with('status', 'Berhasil Menambah Data');
     }
@@ -78,7 +82,9 @@ class ProductController extends Controller
         $types = ProductType::all();
         $product = Product::find($idProduct);
         $hotel = Hotel::find($product->hotel_id);
-        return view('product.formedit', compact('types', 'hotel', 'product'));
+        $fasilitas = Fasilitas::all();
+        $associatedFacilityIds = $product->fasilitas()->pluck('fasilitas_product.fasilitas_id')->toArray();
+        return view('product.formedit', compact('types', 'hotel', 'product', 'fasilitas', 'associatedFacilityIds'));
     }
 
     /**
@@ -90,12 +96,16 @@ class ProductController extends Controller
         $user = Auth::user();
         $this->authorize('employee-permission', $user);
 
+        $selectedFacilities = $request->input('fasilitas_product');
+
         $data = Product::find($id);
         $data->nama = $request->get('product_name');
         $data->hotel_id = $request->get('hotel_id');
         $data->price = $request->get('product_price');
         $data->producttype_id = $request->get('product_type');
         $data->save();
+
+        $data->fasilitas()->sync($selectedFacilities);
 
         // File::delete(public_path() . "/" . $request->filepath);
         $file = $request->file('gambar_kamar');

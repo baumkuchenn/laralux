@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
     Route::get('/product/create/{id}', [ProductController::class, 'create'])->name('product.create');
     Route::resource('producttype', ProductTypeController::class);
     Route::resource('fasilitas', FasilitasController::class);
+    Route::resource('transaction', TransactionController::class);
+    Route::resource('customer', MembershipController::class);
 });
 
 // Rute untuk customer

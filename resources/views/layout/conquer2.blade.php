@@ -54,11 +54,11 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Toastr Notifications -->
+    @if(session('status'))
     <script>
-        @if(session('status'))
         toastr.success("{{ session('status') }}");
-        @endif
     </script>
+    @endif
 
     <style>
         .gallery-container {
