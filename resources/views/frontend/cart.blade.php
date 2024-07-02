@@ -82,7 +82,35 @@
     .cart-btn .btn-success:hover {
         background-color: #218838;
     }
+
+    .alert {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .alert-danger {
+        background-color: #f2dede;
+        color: #a94442;
+        border-color: #ebccd1;
+    }
+
+    .alert-success {
+        background-color: #dff0d8;
+        color: #3c763d;
+        border-color: #d6e9c6;
+    }
 </style>
+
+@if(session('status'))
+<div class="alert alert-success" style="font-weight: bold;">
+    {{ session('status') }}
+</div>
+@elseif(session('error'))
+<div class="alert alert-danger" style="font-weight: bold;">
+    {{ session('error') }}
+</div>
+@endif
 
 <div class="container">
     <div class="row">
@@ -148,20 +176,28 @@
                 <div class="cart-summary">
                     <div class="cart-content">
                         <h1>Cart Summary</h1>
-                        <div style="padding-left: 20px;"> <!-- Mengatur indentasi dengan padding -->
-                            <h4>Grand Total: {{ 'IDR '. number_format($total, 0, ',', '.') }}</h4>
+                        <div style="padding-left: 20px;">
+                            <h4>Grand Total: <span id="grandTotal">{{ 'IDR '. number_format($total, 0, ',', '.') }}</span></h4>
                             @php
-                            $ppn = $total * 0.11; // Menghitung PPN (11% dari grand total)
-                            $grandTotal = $total + $ppn; // Menambahkan PPN ke grand total
+                            $ppn = $total * 0.11;
+                            $grandTotal = $total + $ppn;
                             @endphp
                             <h4>PPN (11%): {{ 'IDR '. number_format($ppn, 0, ',', '.') }}</h4>
                         </div>
-                        <h2>Total (including PPN): {{ 'IDR '. number_format($grandTotal, 0, ',', '.') }}</h2>
+                        <h2>Total (including PPN): <span id="grandTotalAfterPoints">{{ 'IDR '. number_format($grandTotal, 0, ',', '.') }}</span></h2>
                     </div>
 
+                    <h4 style="margin-top: 20px;">Poin Anda: {{ $points }}</h4>
+                    <form id="redemptionForm">
+                        <label for="redemptionPoints">Redeem Points:</label>
+                        <input type="number" id="redemptionPoints" name="redemptionPoints" min="0" max="{{ $points }}" value="0">
+                        <button type="button" class="btn btn-info" onclick="calculateTotal()">Redeem</button>
+                    </form>
+                    <div id="redemptionMessage" style="margin-top: 10px;"></div>
+
                     <div class="cart-btn">
-                        <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Continue Shopping</a>
-                        <a href="{{ route('checkout') }}" class="btn btn-xs btn-success">Checkout</a>
+                        <a href="{{ route('hotel.index') }}" class="btn btn-xs btn-primary">Back to home</a>
+                        <button id="checkoutButton" class="btn btn-xs btn-success">Checkout</button>
                     </div>
                 </div>
             </div>
@@ -169,10 +205,30 @@
     </div>
 </div>
 
+<!-- Modal Konfirmasi Checkout -->
+<div class="modal fade" id="confirmCheckoutModal" tabindex="-1" role="dialog" aria-labelledby="confirmCheckoutLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmCheckoutLabel">Konfirmasi Checkout</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin melanjutkan ke checkout?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-success" id="confirmCheckoutButton">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 @section('judul-halaman')
-<i class="fa fa-shopping-cart fa-5x"></i> Cart
+<i class="fa fa-shopping-cart fa-1x"></i> Cart
 @endsection
 
 @section('title-halaman', 'Laralux.com | Daftar Hotel')
@@ -203,8 +259,60 @@
             },
             success: function(data) {
                 location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                alert('Gagal menambah kuantitas barang: ' + xhr.responseText);
             }
         });
     }
+
+    function calculateTotal() {
+        var points = document.getElementById('redemptionPoints').value;
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route("calculateTotal") }}',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'points': points
+            },
+            success: function(response) {
+                if (response.error) {
+                    document.getElementById('redemptionMessage').innerHTML = '<div class="alert alert-danger">' + response.error + '</div>';
+                } else {
+                    document.getElementById('grandTotal').innerText = 'IDR ' + response.grandTotal;
+                    document.getElementById('grandTotalAfterPoints').innerText = 'IDR ' + response.grandTotalAfterPoints;
+                    document.getElementById('redemptionMessage').innerHTML = '<div class="alert alert-success">Poin yang digunakan: ' + response.pointsToRedeem + '<br>Poin setara: IDR ' + response.pointstomoney + '<br>Total setelah penukaran poin: IDR ' + response.grandTotalAfterPoints + '</div>';
+                }
+            },
+            error: function(xhr, status, error) {
+                document.getElementById('redemptionMessage').innerHTML = '<div class="alert alert-danger">' + xhr.responseJSON.error + '</div>';
+            }
+        });
+    }
+
+    document.getElementById('checkoutButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        $('#confirmCheckoutModal').modal('show');
+    });
+
+    document.getElementById('confirmCheckoutButton').addEventListener('click', function() {
+        $.ajax({
+            type: 'POST',
+            url: '{{ route("checkout") }}',
+            data: {
+                '_token': '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                $('#confirmCheckoutModal').modal('hide');
+                alert(response.success);
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.responseJSON.error);
+            }
+        });
+    });
 </script>
 @endsection

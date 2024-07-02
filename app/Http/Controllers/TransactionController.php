@@ -6,81 +6,88 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $userId = Auth::id();
+
+        $transactions = DB::table('transactions as t')
+            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+            ->join('users as u', 'u.id', '=', 'm.users_id')
+            ->select('m.*', 'u.*', 't.*')
+            ->where('u.id', '=', $userId)
+            ->get();
+
+        // dd($transactions);
+        return view('frontend.receipt', compact('transactions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function detail($id)
     {
-        //
-    }
+        $transaction = DB::table('transactions as t')
+            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+            ->join('users as u', 'u.id', '=', 'm.users_id')
+            ->join('products_transactions as pt', 'pt.transactions_id', '=', 't.id')
+            ->join('products as p', 'p.id', '=', 'pt.products_id')
+            ->join('hotels as h', 'h.id', '=', 'p.hotel_id')
+            ->select('t.*', 't.created_at as transaction_date', 'm.*', 'u.*', 'p.*', 'pt.*', 'h.nama as nama_hotel')
+            ->where('t.id', '=', $id)
+            ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // $transaction = $transaction->first();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // dd($transaction);
+        return view('frontend.detailreceipt', compact('transaction'));
     }
 
     public function checkout()
     {
         $cart = session('cart');
+
+        // Cek apakah keranjang belanja kosong
+        if (empty($cart)) {
+            return response()->json(['error' => 'Yahh, masih kosong nih. Yuk tambah produk dulu baru bisa checkout.'], 400);
+        }
+
         $user = Auth::user();
         $t = new Transaction();
-        
+
         $t->transaction_date = Carbon::now()->toDateTimeString();
+
+        $grandTotal = array_sum(array_column($cart, 'sub_total')); // Total sebelum PPN
+        // Hitung PPN
+        $ppn = $grandTotal * 0.11; // PPN 11%
+        $t->ppn = $ppn;
+        $grandTotal += $ppn; // Total setelah ditambah PPN
+        $t->total = $grandTotal;
+
         $t->save();
 
-        //insert into junction table product_transaction using eloquent
-        $t->insertProducts($cart, $user);
+        $t_id = $t->id;
 
-        //insert into junction table membership using eloquent
-        $t->membership($cart, $user);
+        // Insert into junction table product_transaction using eloquent
+        $t->insertProducts($cart, $t_id);
+        $t->membership($cart, $user, $t_id);
 
+        // Simpan total dan poin member ke dalam transaksi
+        $t->save();
+
+        // Clear cart
         session()->forget('cart');
-        return redirect()->route('hotel.index')->with('status', 'Checkout berhasil');
+
+        return response()->json(['success' => 'Yeay! Checkout berhasil. Enjoyyy'], 200);
+    }
+
+    public function showAjax(Request $request)
+    {
+        $id = ($request->get('id'));
+        $data = Transaction::find($id);
+        $products = $data->products;
+        return response()->json(array(
+            'msg' => view('frontend.receipt', compact('data', 'products'))->render()
+        ), 200);
     }
 }

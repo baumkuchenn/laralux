@@ -65,7 +65,7 @@ class HotelController extends Controller
     {
         //
         $hotel = Hotel::find($id);
-        $product = Product::with('fasilitas')->where('hotel_id', $id)->get();
+        $product = Product::with(['fasilitas','types'])->where('hotel_id', $id)->get();
         return view('hotel.detail', compact('hotel', 'product'));
     }
 

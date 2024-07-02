@@ -48,8 +48,17 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('assets/css/pages/tasks.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/themes/default.css') }}" rel="stylesheet" type="text/css" id="style_color" />
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Toastr Notifications -->
+    <script>
+        @if(session('status'))
+        toastr.success("{{ session('status') }}");
+        @endif
+    </script>
 
     <style>
         .gallery-container {
@@ -122,6 +131,12 @@ License: You must have a valid license purchased only from themeforest(the above
             color: #FFD700;
             margin-bottom: 10px;
         }
+
+        .dropdown.user .dropdown-toggle span {
+            margin-left: 5px;
+            font-weight: bold;
+            color: #ddd;
+        }
     </style>
 </head>
 <!-- END HEAD -->
@@ -153,11 +168,43 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- BEGIN TOP NAVIGATION MENU -->
             <ul class="nav navbar-nav pull-right">
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
-                <li class="dropdown user">
+                @if (auth()->check() && (auth()->user()->role == 'customer'))
+
+                <li class="devider">
+                    &nbsp;
+                </li>
+                <li class="dropdown user" data-toggle="tooltip" title="Cart">
                     <a href="{{ route('cart') }}" class="dropdown-toggle">
+                        <span>Cart</span>
                         <i class="fa fa-shopping-cart"></i>
+                        <span class="badge badge-pill badge-primary">{{ session()->get('cartItemCount', 0) }}</span>
+
                     </a>
                 </li>
+                <li class="devider">
+                    &nbsp;
+                </li>
+
+                <li class="dropdown user" data-toggle="tooltip" title="Riwayat Transaksi">
+                    <a href="{{ url('receipt') }}" class="dropdown-toggle">
+                        <span>Riwayat Transaksi</span>
+                        <i class="fa fa-dollar"></i>
+
+                    </a>
+                </li>
+                <li class="devider">
+                    &nbsp;
+                </li>
+
+                <li class="dropdown user" data-toggle="tooltip" title="Membership">
+                    <a href="{{ url('membership') }}" class="dropdown-toggle">
+                        <span>Membership</span>
+                        <i class="fa fa-list-alt"></i>
+
+                    </a>
+                </li>
+
+                @endif
                 <!-- END TODO DROPDOWN -->
                 <li class="devider">
                     &nbsp;
@@ -168,7 +215,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <img alt="" src="{{ asset('assets/img/guest.jpg') }}" />
                         <span class="username username-hide-on-mobile">
                             @if (Auth::check())
-                            {{ Auth::user()->name }}
+                            Hai! {{ Auth::user()->name }} ({{ Auth::user()->role }})
                             @else
                             Guest
                             @endif
@@ -180,7 +227,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     @if (Auth::check())
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="extra_profile.html"><i class="fa fa-user"></i> My Profile</a>
+                            <a href="#"><i class="fa fa-user"></i> My Profile</a>
                         </li>
 
                         <li class="divider">
@@ -264,14 +311,14 @@ License: You must have a valid license purchased only from themeforest(the above
                     </li>
                     <li>
                         <a href="{{ url('transaction') }}">
-                            <i class="icon-card-list"></i>
+                            <i class="fa fa-money"></i>
                             <span class="title">Daftar Transaksi</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('customer') }}">
-                            <i class="icon-card-list"></i>
-                            <span class="title">Daftar Customer</span>
+                            <i class="fa fa-users"></i>
+                            <span class="title">Daftar Membership</span>
                         </a>
                     </li>
                 </ul>
@@ -290,7 +337,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="page-bar">
                     <ul class="page-breadcrumb">
                         <!-- Buat navigasi nanti bisa ditambahkan pakai yield-->
-                         @yield('navigasi')
+                        @yield('navigasi')
                         <!-- <li>
                             <i class="fa fa-angle-right"></i>
                             <a href="#">Dashboard</a>
