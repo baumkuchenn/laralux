@@ -119,6 +119,23 @@
             </div>
         </div>
     </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <p><strong>Poin yang ditukar:</strong></p>
+        </div>
+        <div class="col-md-6">
+            <p>{{ $firstTransaction->redeempoints }} (Mendapat potongan IDR {{ ($firstTransaction->redeempoints) * 100000 }})</p>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <p><strong>Poin yang Didapat:</strong></p>
+        </div>
+        <div class="col-md-6">
+            <p>{{ $firstTransaction->points }}</p>
+        </div>
+    </div>
     <div class="row mb-3">
         <div class="col-md-6">
             <p><strong>Total:</strong></p>
@@ -133,14 +150,6 @@
         </div>
         <div class="col-md-6">
             <p>IDR {{ number_format($firstTransaction->ppn, 0, ',', '.') }}</p>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <p><strong>Poin yang Didapat:</strong></p>
-        </div>
-        <div class="col-md-6">
-            <p>{{ $firstTransaction->points }}</p>
         </div>
     </div>
 </div>
