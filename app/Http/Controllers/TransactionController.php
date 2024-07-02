@@ -72,12 +72,6 @@ class TransactionController extends Controller
         $t->insertProducts($cart, $t_id);
         $t->membership($cart, $user, $t_id);
 
-        // Calculate points based on cart contents
-        // $points = $t->calculatePoints($cart);
-
-        // Redeem points if applicable        
-        // $grandTotal = $t->redeemPoints($points, $grandTotal);
-
         // Simpan total dan poin member ke dalam transaksi
         $t->save();
 

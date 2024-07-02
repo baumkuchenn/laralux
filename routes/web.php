@@ -52,7 +52,10 @@ Route::group(['middleware' => ['auth', 'checkRole:customer']], function () {
     //     return view('frontend.cart');
     // })->name('cart');
 
+    // Route untuk cart
     Route::get('laralux/cart', [FrontEndController::class, 'cart'])->name('cart');
+    Route::post('laralux/cart/calculateTotal', [FrontEndController::class, 'calculateTotal'])->name('calculateTotal');
+
 
     // Route untuk receipt
     Route::resource('receipt', TransactionController::class);
