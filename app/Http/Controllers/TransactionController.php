@@ -113,29 +113,6 @@ class TransactionController extends Controller
         ), 200);
     }
 
-    public function create()
-    {
-        return view('customer.formcreate');
-    }
-
-    public function store(Request $request)
-    {
-        $user = Auth::user();
-        $this->authorize('owner-permission', $user);
-        // $user = User::where('role', 'customer')->get();
-        $transaction = new Transaction();
-        $transaction->transaction_date = date('Y-m-d H:i:s');
-        $transaction->total = 0;
-        $transaction->ppn = 0;
-        $transaction->penukaran_poin = 0;
-        $transaction->save();
-
-        $selectedUser = $request->get('user');
-        $transaction->membership("member", 0, $selectedUser, $transaction->id, 0);
-
-        return redirect()->route('customer.index')->with('status', 'Berhasil Menambah Data');
-    }
-
     public function destroy(Transaction $transaction)
     {
         $user = Auth::user();
@@ -146,6 +123,6 @@ class TransactionController extends Controller
         } catch (\PDOException $e) {
             $msg = 'Terjadi kesalahan pada saat menghapus data';
         }
-        return redirect()->route('customer.index')->with('status', $msg);
+        return view('frontend.receipt')->with('status', $msg);
     }
 }

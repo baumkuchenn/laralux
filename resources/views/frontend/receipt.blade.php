@@ -39,6 +39,11 @@
                         <td class="text-nowrap">{{ $a->created_at }}</td>
                         <td>
                             <a class="btn btn-info d-md-none" href="#detailModal" data-toggle="modal" onclick="getDetailData({{ $a->id }});">Lihat Rincian</a>
+                            <form method="POST" action="{{ route('transaction.destroy', $a->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Hapus" class="btn btn-xs btn-danger" onclick="return confirm('Apakah anda yakin untuk menghapus transaksi {{ $a->id }} ? ');">
+                            </form>
                         </td>
                     </tr>
                     @endforeach
