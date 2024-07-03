@@ -30,7 +30,15 @@ class MembershipController extends Controller
             ->where('u.id', '=', $userId)
             ->sum(DB::raw('m.points - COALESCE(m.redeempoints, 0)'));
 
+
+        // Khusus untuk owner dan staff
+        $allCust = DB::table('users as u')
+            ->join('memberships as m', 'm.users_id', '=', 'u.id')
+            ->select('u.id', 'u.name', 'u.email', 'u.created_at', DB::raw('SUM(m.points) - SUM(IFNULL(m.redeempoints, 0)) as total_poin'))
+            ->groupBy('u.id', 'u.name', 'u.email', 'u.created_at')
+            ->get();
+
         // dd($transactions);
-        return view('frontend.membership', compact('membership', 'points'));
+        return view('frontend.membership', compact('membership', 'points', 'allCust'));
     }
 }

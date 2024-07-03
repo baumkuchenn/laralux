@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
+    // Untuk menampilkan list transaksi sesuai customer
     public function index()
     {
         $userId = Auth::id();
@@ -21,8 +22,14 @@ class TransactionController extends Controller
             ->where('u.id', '=', $userId)
             ->get();
 
-        // dd($transactions);
-        return view('frontend.receipt', compact('transactions'));
+        $allTransactions = DB::table('transactions as t')
+            ->join('memberships as m', 'm.transactions_id', '=', 't.id')
+            ->join('users as u', 'u.id', '=', 'm.users_id')
+            ->select('m.*', 'u.*', 't.*')
+            ->get();
+
+        // dd($allTransactions);
+        return view('frontend.receipt', compact('transactions', 'allTransactions'));
     }
 
     public function detail($id)
@@ -70,7 +77,7 @@ class TransactionController extends Controller
 
         // Total setelah dikurangi penukaran poin
         $grandTotalAfterPoints = $calculatedTotal['grandTotalAfterPoints'];
-        $t->total = $grandTotalAfterPoints; 
+        $t->total = $grandTotalAfterPoints;
 
         // Penukaran poin setara IDR
         $pointsToMoney = $calculatedTotal['pointsToMoney'];

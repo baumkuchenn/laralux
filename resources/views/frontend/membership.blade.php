@@ -13,9 +13,40 @@
 
 <div class="container mt-3">
     <div class="row">
+        @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+            <h2 class="card-title flex-grow-1">Daftar customer anda:</h2>
+        </div>
+        <div class="table-responsive overflow-auto">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 5%; text-align: center;">No.</th>
+                        <th>Nama Customer</th>
+                        <th>Email</th>
+                        <th>Tanggal Sign Up</th>
+                        <th>Poin yang dimiliki</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($allCust as $index => $a)
+                    <tr>
+                        <td style="text-align: center;">{{ $index + 1 }}</td>
+                        <td class="text-nowrap">{{ $a->name }}</td>
+                        <td class="text-nowrap">{{ $a->email }}</td>
+                        <td class="text-nowrap">{{ $a->created_at }}</td>
+                        <td class="text-nowrap">{{ $a->total_poin }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endif
+
+        @if (auth()->check() && (auth()->user()->role == 'customer'))
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-                <h1 style="font-size: 2.5rem; color: #007bff; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
+                <h1 style="font-size: 2.5rem; color: #007bff; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px; background-color: yellow;">
                     Poin Anda Saat Ini: {{$points}}
                 </h1>
                 <h2 class="card-title flex-grow-1">Detail Poin yang didapat:</h2>
@@ -82,25 +113,10 @@
                 </table>
             </div>
         </div>
+        @endif
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel">Detail Transaksi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="modalContent">
-                <!-- Detail transaksi akan dimuat di sini oleh AJAX -->
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('judul-halaman')

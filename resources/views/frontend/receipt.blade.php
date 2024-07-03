@@ -12,6 +12,39 @@
 @endif
 
 <div class="row mt-3">
+    @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+            <h2 class="card-title flex-grow-1">Daftar semua transaksi dari customer anda:</h2>
+        </div>
+        <div class="table-responsive overflow-auto">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 5%; text-align: center;">No.</th>
+                        <th>Customer</th>
+                        <th>Tanggal Transaksi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($allTransactions as $index => $a)
+                    <tr>
+                        <td style="text-align: center;">{{ $index + 1 }}</td>
+                        <td class="text-nowrap">{{ $a->name }}</td>
+                        <td class="text-nowrap">{{ $a->created_at }}</td>
+                        <td>
+                            <a class="btn btn-info d-md-none" href="#detailModal" data-toggle="modal" onclick="getDetailData({{ $a->id }});">Lihat Rincian</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @endif
+
+    @if (auth()->check() && (auth()->user()->role == 'customer'))
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
             <h2 class="card-title flex-grow-1">Transaksi anda:</h2>
@@ -39,6 +72,7 @@
             </table>
         </div>
     </div>
+    @endif
 </div>
 
 
@@ -61,10 +95,10 @@
 @endsection
 
 @section('judul-halaman')
-<i class="fa fa-file-text-o"></i> Riwayat Transaksi
+<i class="fa fa-file-text-o"></i> Daftar Transaksi
 @endsection
 
-@section('title-halaman', 'Laralux.com | Riwayat Transaksi')
+@section('title-halaman', 'Laralux.com | Daftar Transaksi')
 
 @section('javascript')
 <script>
