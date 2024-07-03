@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\FrontEndController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MembershipController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,11 +49,13 @@ Route::group(['middleware' => ['auth', 'checkRole:owner,staff']], function () {
     Route::get('/product/create/{id}', [ProductController::class, 'create'])->name('product.create');
     Route::resource('producttype', ProductTypeController::class);
     Route::resource('fasilitas', FasilitasController::class);
-
     Route::resource('transaction', TransactionController::class);
-
-
     Route::resource('customer', MembershipController::class);
+
+    // Untuk laporan - laporan
+    Route::get('laporan/produk-paling-banyak-direservasi', [LaporanController::class, 'mostReservedProduct'])->name('mostReservedProduct');
+    Route::get('laporan/customer-dengan-pembelian-terbanyak', [LaporanController::class, 'richestCustomer'])->name('richestCustomer');
+    Route::get('laporan/pelanggan-dengan-poin-terbanyak', [LaporanController::class, 'richestPoinCustomer'])->name('richestPoinCustomer');
 });
 
 // Rute untuk customer
