@@ -116,8 +116,9 @@ class FrontEndController extends Controller
 
         // ambil data poin
         $userPoints = DB::table('memberships')
+            ->select(DB::raw('SUM(points) - SUM(redeempoints) as total_poin'))
             ->where('users_id', $user->id)
-            ->sum('points');
+            ->value('total_poin');
 
         // Konversi poin ke uang
         $pointsToMoney = $pointsToRedeem * 100000;
