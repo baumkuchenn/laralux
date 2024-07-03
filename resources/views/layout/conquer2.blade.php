@@ -137,6 +137,7 @@ License: You must have a valid license purchased only from themeforest(the above
             font-weight: bold;
             color: #ddd;
         }
+        
     </style>
 </head>
 <!-- END HEAD -->
@@ -320,6 +321,18 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-users"></i>
                             <span class="title">Daftar Membership</span>
                         </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-paperclip"></i>
+                            <span class="title">Daftar Laporan</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Most reserved hotel product</a></li>
+                            <li><a href="#">Top buyer by customer</a></li>
+                            <li><a href="#">Top poin member</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <!-- END SIDEBAR MENU -->
