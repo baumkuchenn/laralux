@@ -329,9 +329,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url('mostReservedProduct') }}">Most reserved hotel product</a></li>
-                            <li><a href="{{ url('richestCustomer') }}">Top buyer by customer</a></li>
-                            <li><a href="{{ url('richestPoinCustomer') }}">Top poin member</a></li>
+                            <li><a href="{{ route('mostReservedProduct') }}">Most reserved hotel product</a></li>
+                            <li><a href="{{ route('richestCustomer') }}">Top buyer by customer</a></li>
+                            <li><a href="{{ route('richestPoinCustomer') }}">Top poin member</a></li>
                         </ul>
                     </li>
                 </ul>
