@@ -20,12 +20,14 @@ class TransactionController extends Controller
             ->join('users as u', 'u.id', '=', 'm.users_id')
             ->select('m.*', 'u.*', 't.*')
             ->where('u.id', '=', $userId)
+            ->whereNull('t.deleted_at')
             ->get();
 
         $allTransactions = DB::table('transactions as t')
             ->join('memberships as m', 'm.transactions_id', '=', 't.id')
             ->join('users as u', 'u.id', '=', 'm.users_id')
             ->select('m.*', 'u.*', 't.*')
+            ->whereNull('t.deleted_at')
             ->get();
 
         // dd($allTransactions);
@@ -113,16 +115,16 @@ class TransactionController extends Controller
         ), 200);
     }
 
-    public function destroy(Transaction $transaction)
+    public function destroy(string $id)
     {
         $user = Auth::user();
         $this->authorize('owner-permission', $user);
         try {
-            $transaction->delete();
+            Transaction::where('id', $id)->delete();
             $msg = 'Anda berhasil menghapus data';
         } catch (\PDOException $e) {
             $msg = 'Terjadi kesalahan pada saat menghapus data';
         }
-        return view('frontend.receipt')->with('status', $msg);
+        return redirect()->route('transaction.index')->with('status', $msg);
     }
 }

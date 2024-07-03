@@ -10,6 +10,7 @@ class Transaction extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $table = 'transactions';
 
     public function product()
     {
