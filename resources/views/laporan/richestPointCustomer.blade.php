@@ -15,13 +15,17 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($topUser as $t)
                 <tr>
-                    <td class="text-center font-weight-bold">{{$topUser->id}}</td>
-                    <td>{{$topUser->name}}</td>
-                    <td>{{$topUser->email}}</td>
-                    <td>{{$topUser->created_at}}</td>
-                    <td class="text-success font-weight-bold">{{$topUser->total_poin}}</td>
+
+                    <td class="text-center font-weight-bold">{{$t->id}}</td>
+                    <td>{{$t->name}}</td>
+                    <td>{{$t->email}}</td>
+                    <td>{{$t->created_at}}</td>
+                    <td class="text-success font-weight-bold">{{$t->total_poin}}</td>
+
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
