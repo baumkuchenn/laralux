@@ -24,7 +24,7 @@ class Transaction extends Model
     public function insertProducts($cart, $t_id)
     {
         foreach ($cart as $c) {
-            $subtotal = $c['quantity'] * $c['price'];        
+            $subtotal = $c['quantity'] * $c['price'];
 
             // Debugging
             // dd($t_id);
@@ -32,17 +32,21 @@ class Transaction extends Model
         }
     }
 
-    public function membership($cart, $user, $t_id, $redeemedPoints)
+    public function membership($sumber, $cart, $user, $t_id, $redeemedPoints)
     {
-        $points = $this->calculatePoints($cart); // Calculate points based on cart items
+        $membership = new Membership();
+        if ($sumber == "transaksi") {
+            $points = $this->calculatePoints($cart); // Calculate points based on cart items
+            $membership->users_id = $user->id;
+        } else {
+            $points = 0;
+            $membership->users_id = $user;
+        }
         // dd($points);
         // Create or update membership record for the user
         // $membership = Membership::where('users_id', $user->id)->first();
-
-        $membership = new Membership();
-        $membership->users_id = $user->id;
-        $membership->transactions_id = $t_id;
         
+        $membership->transactions_id = $t_id;
         $membership->points += $points;
         $membership->redeempoints = $redeemedPoints;
         $membership->save();

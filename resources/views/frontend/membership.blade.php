@@ -11,9 +11,13 @@
 </div>
 @endif
 
-<div class="container mt-3">
+<div class="mt-3">
     <div class="row">
         @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
+        @if (auth()->user()->role == 'owner')
+        <a href="{{ route('customer.create') }}" class="btn btn-xs btn-success mb-3" style="margin-bottom: 20px;">+ New Membership</a>
+        @endif
+
         <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
             <h2 class="card-title flex-grow-1">Daftar customer anda:</h2>
         </div>
@@ -26,6 +30,9 @@
                         <th>Email</th>
                         <th>Tanggal Sign Up</th>
                         <th>Poin yang dimiliki</th>
+                        @if (auth()->user()->role == 'owner')
+                        <th>Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +43,15 @@
                         <td class="text-nowrap">{{ $a->email }}</td>
                         <td class="text-nowrap">{{ $a->created_at }}</td>
                         <td class="text-nowrap">{{ $a->total_poin }}</td>
+                        @if (auth()->user()->role == 'owner')
+                        <td>
+                            <form method="POST" action="{{ route('customer.destroy', $a->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Hapus" class="btn btn-xs btn-danger" onclick="return confirm('Apakah anda yakin untuk menghapus member {{ $a->name }} ? ');">
+                            </form>
+                        </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -124,3 +140,13 @@
 @endsection
 
 @section('title-halaman', 'Laralux.com | Membership')
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Membership</b>
+</li>
+@endsection

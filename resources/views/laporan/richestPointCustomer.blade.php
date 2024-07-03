@@ -1,7 +1,7 @@
 @extends('layout.conquer2')
 @section('isi')
 
-<div class="container mt-5">
+<div class="mt-5">
     <h3 class="mb-4 text-center text-primary"><i class="fa fa-star"></i> Customer dengan Poin Terbanyak</h3>
     <div class="table-responsive">
         <table class="table table-bordered table-hover">

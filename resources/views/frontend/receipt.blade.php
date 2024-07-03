@@ -13,6 +13,10 @@
 
 <div class="row mt-3">
     @if (auth()->check() && (auth()->user()->role == 'owner' || auth()->user()->role == 'staff'))
+    @if (auth()->user()->role == 'owner')
+    <a href="{{ route('transaction.create') }}" class="btn btn-xs btn-success mb-3" style="margin-bottom: 20px;">+ New Transaksi</a>
+    @endif
+
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
             <h2 class="card-title flex-grow-1">Daftar semua transaksi dari customer anda:</h2>
@@ -113,4 +117,14 @@
         });
     }
 </script>
+@endsection
+@section('navigasi')
+<li>
+    <i class="fa fa-home"></i>
+    <a href="{{ route('hotel.index') }}">Home</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+    <b>Daftar Transaksi</b>
+</li>
 @endsection

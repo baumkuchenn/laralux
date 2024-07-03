@@ -92,7 +92,7 @@ class TransactionController extends Controller
 
         // Insert into junction table product_transaction using eloquent
         $t->insertProducts($cart, $t_id);
-        $t->membership($cart, $user, $t_id, $redeemedPoints);
+        $t->membership("transaksi", $cart, $user, $t_id, $redeemedPoints);
 
         // Simpan total dan poin member ke dalam transaksi
         $t->save();
@@ -111,5 +111,41 @@ class TransactionController extends Controller
         return response()->json(array(
             'msg' => view('frontend.receipt', compact('data', 'products'))->render()
         ), 200);
+    }
+
+    public function create()
+    {
+        return view('customer.formcreate');
+    }
+
+    public function store(Request $request)
+    {
+        $user = Auth::user();
+        $this->authorize('owner-permission', $user);
+        // $user = User::where('role', 'customer')->get();
+        $transaction = new Transaction();
+        $transaction->transaction_date = date('Y-m-d H:i:s');
+        $transaction->total = 0;
+        $transaction->ppn = 0;
+        $transaction->penukaran_poin = 0;
+        $transaction->save();
+
+        $selectedUser = $request->get('user');
+        $transaction->membership("member", 0, $selectedUser, $transaction->id, 0);
+
+        return redirect()->route('customer.index')->with('status', 'Berhasil Menambah Data');
+    }
+
+    public function destroy(Transaction $transaction)
+    {
+        $user = Auth::user();
+        $this->authorize('owner-permission', $user);
+        try {
+            $transaction->delete();
+            $msg = 'Anda berhasil menghapus data';
+        } catch (\PDOException $e) {
+            $msg = 'Terjadi kesalahan pada saat menghapus data';
+        }
+        return redirect()->route('customer.index')->with('status', $msg);
     }
 }

@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('employee-permission', 'App\Policies\HotelTypePolicy@check');
+        Gate::define('owner-permission', 'App\Policies\MembershipPolicy@check');
         //
     }
 }
